@@ -74,6 +74,8 @@
       text-transform: lowercase;
       opacity: 0;
       animation: fadeUp 0.8s ease forwards 0.45s;
+      /* pre-allocate 2 lines so CTA button never shifts */
+      min-height: calc(1.84 * clamp(2.4rem, 7.5vw, 9rem));
     }
 
     .hero-headline.typing { opacity: 1; animation: none; }
@@ -85,7 +87,14 @@
       animation: cursorBlink 0.6s step-end infinite;
     }
 
-    .hero-headline.done::after { display: none; }
+    /* visibility:hidden keeps the space so nothing shifts when cursor disappears */
+    .hero-headline.done::after {
+      content: '|';
+      display: inline-block;
+      margin-left: 3px;
+      visibility: hidden;
+      animation: none;
+    }
 
     .hero-cta {
       display: inline-block;
@@ -480,16 +489,22 @@
       gap: 48px;
     }
 
-    .footer-logo-wrap { display: flex; flex-direction: column; gap: 24px; }
-    .footer-logo { height: 28px; width: auto; display: block; }
+    .footer-logo-wrap { display: flex; flex-direction: column; gap: 20px; align-items: flex-start; }
+    .footer-logo { height: 40px; width: auto; display: block; }
 
-    .footer-tel {
+    .footer-address { display: flex; flex-direction: column; gap: 4px; }
+
+    .footer-address p,
+    .footer-address a {
       font-size: 0.72rem;
-      letter-spacing: 0.1em;
       font-weight: 300;
+      letter-spacing: 0.05em;
       color: #555;
       text-decoration: none;
+      line-height: 1.7;
     }
+
+    .footer-address a:hover { color: var(--black); }
 
     .footer-links { display: flex; flex-wrap: wrap; gap: 36px; }
 
@@ -582,7 +597,7 @@
       .hero-scroll { display: none; }
 
       /* Why cards — force reset all specificity conflicts */
-      .why-grid { grid-template-columns: 1fr; border-top: none; }
+      .why-grid { grid-template-columns: 1fr; }
 
       .why-card {
         padding: 40px 0 !important;
@@ -661,7 +676,7 @@
     <div class="hero-main">
       <div class="hero-rule"></div>
       <h1 class="hero-headline">du verdienst es,<br>gesehen zu werden</h1>
-      <a href="tel:01742143654" class="hero-cta">Jetzt Kostenlos Anfragen</a>
+      <a href="tel:01742143645" class="hero-cta">Jetzt Kostenlos Anfragen</a>
     </div>
     <div class="hero-bottom">
       <div class="hero-scroll">
@@ -769,13 +784,13 @@
 
     <!-- Mobile tab buttons (hidden on desktop) -->
     <div class="pricing-tabs">
-      <button class="ptab active" data-idx="0">Starter</button>
-      <button class="ptab" data-idx="1">Professionell</button>
+      <button class="ptab" data-idx="0">Starter</button>
+      <button class="ptab active" data-idx="1">Professionell</button>
       <button class="ptab" data-idx="2">Growth</button>
     </div>
 
     <div class="pricing-grid reveal">
-      <div class="pricing-card active-mobile">
+      <div class="pricing-card">
         <p class="pricing-tier">Starter</p>
         <p class="pricing-price">€100</p>
         <p class="pricing-period">/ monatlich</p>
@@ -784,9 +799,9 @@
           <li>Hosting + Domain</li>
           <li>Monatliche Betreuung</li>
         </ul>
-        <a href="tel:01742143654" class="btn">Jetzt starten</a>
+        <a href="tel:01742143645" class="btn">Jetzt starten</a>
       </div>
-      <div class="pricing-card featured">
+      <div class="pricing-card featured active-mobile">
         <p class="pricing-tier">Professionell</p>
         <p class="pricing-price">€300</p>
         <p class="pricing-period">/ monatlich</p>
@@ -795,7 +810,7 @@
           <li>Google Profil Optimierung + Maintenance</li>
           <li>Custom Buchungsformular für Kunden</li>
         </ul>
-        <a href="tel:01742143654" class="btn">Beliebteste Wahl</a>
+        <a href="tel:01742143645" class="btn">Beliebteste Wahl</a>
       </div>
       <div class="pricing-card">
         <p class="pricing-tier">Growth</p>
@@ -807,7 +822,7 @@
           <li>Custom Buchungsformulare für Kunden</li>
           <li>Google Analytics</li>
         </ul>
-        <a href="tel:01742143654" class="btn">Kontakt aufnehmen</a>
+        <a href="tel:01742143645" class="btn">Kontakt aufnehmen</a>
       </div>
     </div>
   </section>
@@ -815,9 +830,9 @@
   <!-- CTA STRIP -->
   <div class="cta-strip">
     <p class="cta-strip-headline">bereit,<br>gesehen zu werden?</p>
-    <a href="tel:01742143654" class="cta-strip-btn">
+    <a href="tel:01742143645" class="cta-strip-btn">
       Jetzt Kostenlos Anfragen
-      <span>0174 2143654</span>
+      <span>0174 2143645</span>
     </a>
   </div>
 
@@ -854,7 +869,11 @@
     <div class="footer-top">
       <div class="footer-logo-wrap">
         <img src="brand_assets/YSA_Logo.png" alt="YSA" class="footer-logo">
-        <a href="tel:01742143654" class="footer-tel">0174 2143654</a>
+        <div class="footer-address">
+          <p>Laurinweg 5, 85521 Ottobrunn</p>
+          <a href="tel:01742143645">0174 2143645</a>
+          <a href="mailto:kontakt@ysacooperation.de">kontakt@ysacooperation.de</a>
+        </div>
       </div>
       <nav class="footer-links">
         <a href="#why">Warum wir</a>
@@ -862,7 +881,7 @@
         <a href="#work">Referenzen</a>
         <a href="#pricing">Preise</a>
         <a href="#faq">FAQ</a>
-        <a href="tel:01742143654">Kontakt</a>
+        <a href="tel:01742143645">Kontakt</a>
         <a href="impressum.html">Impressum</a>
         <a href="agb.html">AGB</a>
       </nav>
