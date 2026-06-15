@@ -4,6 +4,104 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>YSA — Online-Präsenz Agentur</title>
+  <meta name="description" content="YSA baut professionelle Online-Präsenzen für lokale Unternehmen: Webdesign, SEO und Google-Profil-Optimierung. Mehr Sichtbarkeit, mehr Kunden.">
+  <link rel="canonical" href="https://ysacooperation.de/">
+  <meta name="robots" content="index,follow">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ysacooperation.de/">
+  <meta property="og:title" content="YSA — Online-Präsenz Agentur">
+  <meta property="og:description" content="YSA baut professionelle Online-Präsenzen für lokale Unternehmen: Webdesign, SEO und Google-Profil-Optimierung. Mehr Sichtbarkeit, mehr Kunden.">
+  <meta property="og:image" content="https://ysacooperation.de/brand_assets/YSA_Logo.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="YSA — Online-Präsenz Agentur">
+  <meta name="twitter:description" content="YSA baut professionelle Online-Präsenzen für lokale Unternehmen: Webdesign, SEO und Google-Profil-Optimierung. Mehr Sichtbarkeit, mehr Kunden.">
+  <meta name="twitter:image" content="https://ysacooperation.de/brand_assets/YSA_Logo.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://ysacooperation.de/#organization",
+        "name": "YSA Cooperations",
+        "url": "https://ysacooperation.de/",
+        "logo": "https://ysacooperation.de/brand_assets/YSA_Logo.png",
+        "image": "https://ysacooperation.de/brand_assets/YSA_Logo.png",
+        "description": "YSA baut professionelle Online-Präsenzen für lokale Unternehmen: Webdesign, SEO und Google-Profil-Optimierung.",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Laurinweg 5",
+          "addressLocality": "Ottobrunn",
+          "postalCode": "85521",
+          "addressCountry": "DE"
+        },
+        "telephone": "+491742143654",
+        "email": "kontakt@ysacooperation.de",
+        "areaServed": "DE",
+        "knowsLanguage": "de",
+        "priceRange": "€€"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://ysacooperation.de/#website",
+        "url": "https://ysacooperation.de/",
+        "name": "YSA — Online-Präsenz Agentur",
+        "publisher": { "@id": "https://ysacooperation.de/#organization" }
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Wie lange dauert es, bis man Ergebnisse sieht?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Das hängt vom jeweiligen Service ab. Eine neue Website geht innerhalb weniger Wochen live. SEO-Verbesserungen werden typischerweise nach 3–6 Monaten sichtbar. Google-Profil-Optimierungen zeigen oft schon innerhalb weniger Tage Wirkung."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Brauche ich alle Leistungen, oder kann ich nur eine wählen?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Du kannst genau dort anfangen, wo du es brauchst. Viele Kunden starten mit einer Website oder dem Google-Profil und ergänzen SEO später. Wir beraten dich ehrlich — ohne unnötiges Upselling."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Mit welchen Branchen arbeitet ihr?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Wir arbeiten mit lokalen Unternehmen, Dienstleistern, Restaurants, Arztpraxen, Beratern und mehr. Wenn deine Kunden online nach dir suchen — und das tun sie — helfen wir dir, diese Nachfrage in echtes Geschäft umzuwandeln."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Was passiert, nachdem die Website online ist?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Wir bieten laufende Wartung, SEO-Monitoring und Wachstumsunterstützung an. Deine Online-Präsenz ist kein einmaliges Projekt — sie entfaltet ihre volle Wirkung durch kontinuierliche Aufmerksamkeit."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Wie fange ich an?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Einfach melden. Wir vereinbaren ein kostenloses Erstgespräch, um deine Ziele zu verstehen und den richtigen Weg für dich zu empfehlen. Kein Druck, kein Fachjargon — nur ein klares Gespräch über das, was deinem Business am meisten bringt."
+        }
+      }
+    ]
+  }
+  </script>
+  <script type="speculationrules">
+  {"prerender":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}
+  </script>
   <script>if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; window.scrollTo(0, 0);</script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -666,14 +764,38 @@
       .footer-top { flex-direction: column; gap: 32px; }
       .footer-links { gap: 20px; }
     }
+
+    /* ── SKIP LINK ────────────────────────────────────────── */
+    .skip-link {
+      position: absolute;
+      transform: translateY(-100%);
+      left: 0;
+      top: 0;
+      z-index: 9999;
+      padding: 10px 20px;
+      background: var(--black);
+      color: var(--white);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      transition: transform 0.15s ease;
+    }
+    .skip-link:focus { transform: translateY(0); }
+
+    /* ── FOCUS VISIBLE ────────────────────────────────────── */
+    :focus-visible { outline: 2px solid var(--black); outline-offset: 3px; }
+    .ptab:focus-visible { outline-offset: -3px; }
   </style>
 </head>
 <body>
 
+  <a href="#main-content" class="skip-link">Zum Hauptinhalt springen</a>
+
   <!-- HERO -->
   <section id="hero">
     <div class="hero-top">
-      <img src="brand_assets/YSA_Logo.png" alt="YSA" class="hero-logo">
+      <img src="brand_assets/YSA_Logo.png" alt="YSA" class="hero-logo" width="500" height="500">
     </div>
     <div class="hero-main">
       <div class="hero-rule"></div>
@@ -694,6 +816,8 @@
       </div>
     </div>
   </section>
+
+  <main id="main-content">
 
   <!-- WARUM DU UNS BRAUCHST -->
   <section id="why">
@@ -847,33 +971,35 @@
     <h2 class="section-headline reveal">häufige<br>fragen.</h2>
     <div class="faq-list">
       <div class="faq-item reveal">
-        <div class="faq-q"><h3>Wie lange dauert es, bis man Ergebnisse sieht?</h3><div class="faq-plus"></div></div>
+        <div class="faq-q" role="button" tabindex="0" aria-expanded="false"><h3>Wie lange dauert es, bis man Ergebnisse sieht?</h3><div class="faq-plus"></div></div>
         <div class="faq-a"><p>Das hängt vom jeweiligen Service ab. Eine neue Website geht innerhalb weniger Wochen live. SEO-Verbesserungen werden typischerweise nach 3–6 Monaten sichtbar. Google-Profil-Optimierungen zeigen oft schon innerhalb weniger Tage Wirkung.</p></div>
       </div>
       <div class="faq-item reveal">
-        <div class="faq-q"><h3>Brauche ich alle Leistungen, oder kann ich nur eine wählen?</h3><div class="faq-plus"></div></div>
+        <div class="faq-q" role="button" tabindex="0" aria-expanded="false"><h3>Brauche ich alle Leistungen, oder kann ich nur eine wählen?</h3><div class="faq-plus"></div></div>
         <div class="faq-a"><p>Du kannst genau dort anfangen, wo du es brauchst. Viele Kunden starten mit einer Website oder dem Google-Profil und ergänzen SEO später. Wir beraten dich ehrlich — ohne unnötiges Upselling.</p></div>
       </div>
       <div class="faq-item reveal">
-        <div class="faq-q"><h3>Mit welchen Branchen arbeitet ihr?</h3><div class="faq-plus"></div></div>
+        <div class="faq-q" role="button" tabindex="0" aria-expanded="false"><h3>Mit welchen Branchen arbeitet ihr?</h3><div class="faq-plus"></div></div>
         <div class="faq-a"><p>Wir arbeiten mit lokalen Unternehmen, Dienstleistern, Restaurants, Arztpraxen, Beratern und mehr. Wenn deine Kunden online nach dir suchen — und das tun sie — helfen wir dir, diese Nachfrage in echtes Geschäft umzuwandeln.</p></div>
       </div>
       <div class="faq-item reveal">
-        <div class="faq-q"><h3>Was passiert, nachdem die Website online ist?</h3><div class="faq-plus"></div></div>
+        <div class="faq-q" role="button" tabindex="0" aria-expanded="false"><h3>Was passiert, nachdem die Website online ist?</h3><div class="faq-plus"></div></div>
         <div class="faq-a"><p>Wir bieten laufende Wartung, SEO-Monitoring und Wachstumsunterstützung an. Deine Online-Präsenz ist kein einmaliges Projekt — sie entfaltet ihre volle Wirkung durch kontinuierliche Aufmerksamkeit.</p></div>
       </div>
       <div class="faq-item reveal">
-        <div class="faq-q"><h3>Wie fange ich an?</h3><div class="faq-plus"></div></div>
+        <div class="faq-q" role="button" tabindex="0" aria-expanded="false"><h3>Wie fange ich an?</h3><div class="faq-plus"></div></div>
         <div class="faq-a"><p>Einfach melden. Wir vereinbaren ein kostenloses Erstgespräch, um deine Ziele zu verstehen und den richtigen Weg für dich zu empfehlen. Kein Druck, kein Fachjargon — nur ein klares Gespräch über das, was deinem Business am meisten bringt.</p></div>
       </div>
     </div>
   </section>
 
+  </main>
+
   <!-- FOOTER -->
   <footer>
     <div class="footer-top">
       <div class="footer-logo-wrap">
-        <img src="brand_assets/YSA_Logo.png" alt="YSA" class="footer-logo">
+        <img src="brand_assets/YSA_Logo.png" alt="YSA" class="footer-logo" width="500" height="500" loading="lazy">
         <div class="footer-address">
           <p>Laurinweg 5, 85521 Ottobrunn</p>
           <a href="tel:01742143654">0174 2143654</a>
@@ -889,6 +1015,7 @@
         <a href="tel:01742143654">Kontakt</a>
         <a href="impressum.html">Impressum</a>
         <a href="agb.html">AGB</a>
+        <a href="barrierefreiheit.html">Barrierefreiheit</a>
       </nav>
     </div>
     <div class="footer-rule"></div>
@@ -977,7 +1104,7 @@
 
     // ── FAQ accordion ───────────────────────────────────────────
     document.querySelectorAll('.faq-q').forEach(trigger => {
-      trigger.addEventListener('click', () => {
+      function toggleFaq() {
         const item   = trigger.closest('.faq-item');
         const answer = item.querySelector('.faq-a');
         const isOpen = item.classList.contains('open');
@@ -985,12 +1112,19 @@
         document.querySelectorAll('.faq-item.open').forEach(o => {
           o.classList.remove('open');
           o.querySelector('.faq-a').style.maxHeight = '0';
+          o.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
         });
 
         if (!isOpen) {
           item.classList.add('open');
           answer.style.maxHeight = answer.scrollHeight + 'px';
+          trigger.setAttribute('aria-expanded', 'true');
         }
+      }
+
+      trigger.addEventListener('click', toggleFaq);
+      trigger.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleFaq(); }
       });
     });
   </script>
