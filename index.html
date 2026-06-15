@@ -67,6 +67,7 @@
     }
 
     .hero-headline {
+      position: relative;
       font-size: clamp(2.4rem, 7.5vw, 9rem);
       font-weight: 900;
       line-height: 0.92;
@@ -74,26 +75,27 @@
       text-transform: lowercase;
       opacity: 0;
       animation: fadeUp 0.8s ease forwards 0.45s;
-      /* pre-allocate 2 lines so CTA button never shifts */
-      min-height: calc(1.84 * clamp(2.4rem, 7.5vw, 9rem));
     }
 
-    .hero-headline.typing { opacity: 1; animation: none; }
+    /* Ghost holds full text invisibly — size never changes, nothing can shift */
+    .tw-ghost {
+      display: block;
+      visibility: hidden;
+    }
 
-    .hero-headline.typing::after {
+    /* Typing span overlays the ghost exactly */
+    .tw-text {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+    }
+
+    .tw-text.typing::after {
       content: '|';
       display: inline-block;
       margin-left: 3px;
       animation: cursorBlink 0.6s step-end infinite;
-    }
-
-    /* visibility:hidden keeps the space so nothing shifts when cursor disappears */
-    .hero-headline.done::after {
-      content: '|';
-      display: inline-block;
-      margin-left: 3px;
-      visibility: hidden;
-      animation: none;
     }
 
     .hero-cta {
@@ -675,7 +677,10 @@
     </div>
     <div class="hero-main">
       <div class="hero-rule"></div>
-      <h1 class="hero-headline">du verdienst es,<br>gesehen zu werden</h1>
+      <h1 class="hero-headline">
+        <span class="tw-ghost">du verdienst es,<br>gesehen zu werden</span>
+        <span class="tw-text" aria-hidden="true"></span>
+      </h1>
       <a href="tel:01742143654" class="hero-cta">Jetzt Kostenlos Anfragen</a>
     </div>
     <div class="hero-bottom">
@@ -898,32 +903,36 @@
     window.scrollTo(0, 0);
 
     // ── Typewriter ──────────────────────────────────────────────
+    // Ghost span always holds the full text → element size is fixed from the
+    // very start → CTA button position never shifts during or after typing.
     (function () {
-      const el = document.querySelector('.hero-headline');
-      const raw = el.innerHTML;
-      el.innerHTML = '';
-      el.classList.add('typing');
+      const ghost   = document.querySelector('.tw-ghost');
+      const display = document.querySelector('.tw-text');
+      const rawText = ghost.innerHTML;
+
+      display.classList.add('typing');
 
       const tokens = [];
       let i = 0;
-      while (i < raw.length) {
-        const chunk = raw.slice(i, i + 4).toLowerCase();
-        if (chunk === '<br>') { tokens.push({ br: true }); i += 4; }
-        else { tokens.push({ ch: raw[i] }); i++; }
+      while (i < rawText.length) {
+        if (rawText.slice(i, i + 4).toLowerCase() === '<br>') {
+          tokens.push({ br: true }); i += 4;
+        } else {
+          tokens.push({ ch: rawText[i] }); i++;
+        }
       }
 
       let idx = 0;
       function tick() {
         if (idx >= tokens.length) {
-          el.classList.replace('typing', 'done');
+          display.classList.remove('typing');
           setTimeout(() => {
-            const cta = document.querySelector('.hero-cta');
-            if (cta) cta.classList.add('hero-cta-visible');
+            document.querySelector('.hero-cta')?.classList.add('hero-cta-visible');
           }, 200);
           return;
         }
         const t = tokens[idx++];
-        el.innerHTML += t.br ? '<br>' : t.ch;
+        display.innerHTML += t.br ? '<br>' : t.ch;
         setTimeout(tick, t.br ? 0 : 46);
       }
       setTimeout(tick, 500);
