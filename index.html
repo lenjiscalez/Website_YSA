@@ -4,25 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>YSA — Online-Präsenz Agentur</title>
+  <script>if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; window.scrollTo(0, 0);</script>
   <style>
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --black: #000000;
-      --white: #ffffff;
+      --black: #000;
+      --white: #fff;
       --font: 'Helvetica World', 'Helvetica Neue', Helvetica, Arial, sans-serif;
       --px: clamp(24px, 6vw, 88px);
-      --py: clamp(80px, 10vw, 140px);
+      --py: clamp(88px, 11vw, 148px);
     }
 
-    html {
-      scroll-behavior: smooth;
-      font-size: 16px;
-    }
+    html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
 
     body {
       background: var(--white);
@@ -34,7 +28,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ── HERO ──────────────────────────────────────────────────── */
+    /* ── HERO ─────────────────────────────────────────────── */
 
     #hero {
       position: relative;
@@ -53,11 +47,7 @@
       animation: fadeUp 0.7s ease forwards;
     }
 
-    .hero-logo {
-      height: 36px;
-      width: auto;
-      display: block;
-    }
+    .hero-logo { height: 36px; width: auto; display: block; }
 
     .hero-main {
       flex: 1;
@@ -77,7 +67,7 @@
     }
 
     .hero-headline {
-      font-size: clamp(2.6rem, 8vw, 9rem);
+      font-size: clamp(2.4rem, 7.5vw, 9rem);
       font-weight: 900;
       line-height: 0.92;
       letter-spacing: -0.03em;
@@ -85,6 +75,36 @@
       opacity: 0;
       animation: fadeUp 0.8s ease forwards 0.45s;
     }
+
+    .hero-headline.typing { opacity: 1; animation: none; }
+
+    .hero-headline.typing::after {
+      content: '|';
+      display: inline-block;
+      margin-left: 3px;
+      animation: cursorBlink 0.6s step-end infinite;
+    }
+
+    .hero-headline.done::after { display: none; }
+
+    .hero-cta {
+      display: inline-block;
+      margin-top: clamp(28px, 4vw, 48px);
+      padding: 16px 36px;
+      border: 2px solid var(--black);
+      color: var(--black);
+      text-decoration: none;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 700;
+      opacity: 0;
+      transition: opacity 0.5s ease, background 0.22s, color 0.22s;
+      align-self: flex-start;
+    }
+
+    .hero-cta.hero-cta-visible { opacity: 1; }
+    .hero-cta:hover { background: var(--black); color: var(--white); }
 
     .hero-bottom {
       display: flex;
@@ -130,14 +150,9 @@
       margin-bottom: 14px;
     }
 
-    .hero-tagline-rule {
-      width: 100%;
-      min-width: 180px;
-      height: 3px;
-      background: var(--black);
-    }
+    .hero-tagline-rule { width: 100%; min-width: 180px; height: 3px; background: var(--black); }
 
-    /* ── SHARED SECTION STYLES ─────────────────────────────────── */
+    /* ── SHARED SECTIONS ──────────────────────────────────── */
 
     section {
       padding: var(--py) var(--px);
@@ -176,7 +191,7 @@
       margin-bottom: 80px;
     }
 
-    /* ── REVEAL ─────────────────────────────────────────────────── */
+    /* ── REVEAL ──────────────────────────────────────────── */
 
     .reveal {
       opacity: 0;
@@ -184,12 +199,9 @@
       transition: opacity 0.75s ease, transform 0.75s ease;
     }
 
-    .reveal.in {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .reveal.in { opacity: 1; transform: translateY(0); }
 
-    /* ── WHY ─────────────────────────────────────────────────────── */
+    /* ── WHY ─────────────────────────────────────────────── */
 
     .why-grid {
       display: grid;
@@ -202,14 +214,8 @@
       border-right: 1px solid var(--black);
     }
 
-    .why-card:last-child {
-      border-right: none;
-      padding-right: 0;
-    }
-
-    .why-card:not(:first-child) {
-      padding-left: 40px;
-    }
+    .why-card:last-child { border-right: none; padding-right: 0; }
+    .why-card:not(:first-child) { padding-left: 40px; }
 
     .why-num {
       font-size: 0.65rem;
@@ -228,13 +234,9 @@
       margin-bottom: 16px;
     }
 
-    .why-card p {
-      font-size: 0.875rem;
-      line-height: 1.75;
-      font-weight: 300;
-    }
+    .why-card p { font-size: 0.875rem; line-height: 1.75; font-weight: 300; }
 
-    /* ── PROCESS ─────────────────────────────────────────────────── */
+    /* ── PROCESS ──────────────────────────────────────────── */
 
     .process-item {
       display: grid;
@@ -245,9 +247,7 @@
       align-items: start;
     }
 
-    .process-item:last-child {
-      border-bottom: 1px solid var(--black);
-    }
+    .process-item:last-child { border-bottom: 1px solid var(--black); }
 
     .process-num {
       font-size: clamp(3rem, 9vw, 9rem);
@@ -256,9 +256,7 @@
       letter-spacing: -0.05em;
     }
 
-    .process-body {
-      padding-top: clamp(4px, 1.2vw, 14px);
-    }
+    .process-body { padding-top: clamp(4px, 1.2vw, 14px); }
 
     .process-body h3 {
       font-size: clamp(1.2rem, 2.8vw, 2.2rem);
@@ -268,14 +266,9 @@
       margin-bottom: 18px;
     }
 
-    .process-body p {
-      font-size: 0.9rem;
-      line-height: 1.8;
-      font-weight: 300;
-      max-width: 560px;
-    }
+    .process-body p { font-size: 0.9rem; line-height: 1.8; font-weight: 300; max-width: 560px; }
 
-    /* ── WORK ────────────────────────────────────────────────────── */
+    /* ── WORK ─────────────────────────────────────────────── */
 
     .work-grid {
       display: grid;
@@ -296,17 +289,9 @@
       cursor: default;
     }
 
-    .work-card:hover {
-      background: var(--black);
-      color: var(--white);
-    }
+    .work-card:hover { background: var(--black); color: var(--white); }
 
-    .work-tag {
-      font-size: 0.65rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      font-weight: 500;
-    }
+    .work-tag { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500; }
 
     .work-card h3 {
       font-size: clamp(1.3rem, 2.5vw, 2.2rem);
@@ -315,24 +300,13 @@
       line-height: 1;
     }
 
-    .work-foot {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-    }
+    .work-foot { display: flex; justify-content: space-between; align-items: flex-end; }
+    .work-foot span { font-size: 0.72rem; font-weight: 300; letter-spacing: 0.06em; }
+    .work-arrow { font-size: 1.2rem; font-weight: 300; }
 
-    .work-foot span {
-      font-size: 0.72rem;
-      font-weight: 300;
-      letter-spacing: 0.06em;
-    }
+    /* ── PRICING ──────────────────────────────────────────── */
 
-    .work-arrow {
-      font-size: 1.2rem;
-      font-weight: 300;
-    }
-
-    /* ── PRICING ─────────────────────────────────────────────────── */
+    .pricing-tabs { display: none; }
 
     .pricing-grid {
       display: grid;
@@ -347,14 +321,9 @@
       flex-direction: column;
     }
 
-    .pricing-card:last-child {
-      border-right: none;
-    }
+    .pricing-card:last-child { border-right: none; }
 
-    .pricing-card.featured {
-      background: var(--black);
-      color: var(--white);
-    }
+    .pricing-card.featured { background: var(--black); color: var(--white); }
 
     .pricing-tier {
       font-size: 0.68rem;
@@ -372,12 +341,7 @@
       margin-bottom: 6px;
     }
 
-    .pricing-period {
-      font-size: 0.8rem;
-      font-weight: 300;
-      letter-spacing: 0.06em;
-      margin-bottom: 52px;
-    }
+    .pricing-period { font-size: 0.8rem; font-weight: 300; letter-spacing: 0.06em; margin-bottom: 52px; }
 
     .pricing-features {
       list-style: none;
@@ -396,11 +360,7 @@
       gap: 14px;
     }
 
-    .pricing-features li::before {
-      content: '→';
-      font-size: 0.72rem;
-      flex-shrink: 0;
-    }
+    .pricing-features li::before { content: '→'; font-size: 0.72rem; flex-shrink: 0; }
 
     .btn {
       display: block;
@@ -414,36 +374,68 @@
       cursor: pointer;
       text-decoration: none;
       text-align: center;
-      transition: background 0.22s ease, color 0.22s ease, border-color 0.22s ease;
+      transition: background 0.22s ease, color 0.22s ease;
       border: 2px solid currentColor;
       background: transparent;
       color: inherit;
     }
 
-    .btn:hover {
-      background: currentColor;
+    .btn:hover { background: currentColor; color: var(--white); }
+
+    .pricing-card.featured .btn { border-color: var(--white); color: var(--white); }
+    .pricing-card.featured .btn:hover { background: var(--white); color: var(--black); }
+
+    /* ── CTA STRIP ────────────────────────────────────────── */
+
+    .cta-strip {
+      padding: var(--py) var(--px);
+      background: var(--black);
       color: var(--white);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
     }
 
-    .pricing-card.featured .btn {
-      border-color: var(--white);
-      color: var(--white);
+    .cta-strip-headline {
+      font-size: clamp(2rem, 5vw, 5rem);
+      font-weight: 900;
+      letter-spacing: -0.025em;
+      text-transform: lowercase;
+      line-height: 0.95;
     }
 
-    .pricing-card.featured .btn:hover {
+    .cta-strip-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 22px 52px;
       background: var(--white);
       color: var(--black);
+      text-decoration: none;
+      font-family: var(--font);
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-align: center;
+      border: 2px solid var(--white);
+      transition: background 0.22s, color 0.22s;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
-    /* ── FAQ ──────────────────────────────────────────────────────── */
+    .cta-strip-btn:hover { background: transparent; color: var(--white); }
 
-    .faq-list {
-      border-bottom: 1px solid var(--black);
-    }
+    .cta-strip-btn span { font-size: 0.65rem; letter-spacing: 0.1em; font-weight: 300; }
 
-    .faq-item {
-      border-top: 1px solid var(--black);
-    }
+    /* ── FAQ ──────────────────────────────────────────────── */
+
+    .faq-list { border-bottom: 1px solid var(--black); }
+
+    .faq-item { border-top: 1px solid var(--black); }
 
     .faq-q {
       display: flex;
@@ -455,67 +447,29 @@
       gap: 24px;
     }
 
-    .faq-q h3 {
-      font-size: clamp(1rem, 1.8vw, 1.25rem);
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      line-height: 1.3;
-    }
+    .faq-q h3 { font-size: clamp(1rem, 1.8vw, 1.25rem); font-weight: 600; letter-spacing: -0.01em; line-height: 1.3; }
 
-    .faq-plus {
-      flex-shrink: 0;
-      width: 22px;
-      height: 22px;
-      position: relative;
-    }
+    .faq-plus { flex-shrink: 0; width: 22px; height: 22px; position: relative; }
 
-    .faq-plus::before,
-    .faq-plus::after {
+    .faq-plus::before, .faq-plus::after {
       content: '';
       position: absolute;
       background: var(--black);
       transition: transform 0.3s ease, opacity 0.3s ease;
     }
 
-    .faq-plus::before {
-      width: 22px;
-      height: 2px;
-      top: 10px;
-      left: 0;
-    }
+    .faq-plus::before { width: 22px; height: 2px; top: 10px; left: 0; }
+    .faq-plus::after  { width: 2px; height: 22px; left: 10px; top: 0; }
 
-    .faq-plus::after {
-      width: 2px;
-      height: 22px;
-      left: 10px;
-      top: 0;
-    }
+    .faq-item.open .faq-plus::after { opacity: 0; transform: rotate(90deg); }
 
-    .faq-item.open .faq-plus::after {
-      opacity: 0;
-      transform: rotate(90deg);
-    }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1); }
 
-    .faq-a {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
+    .faq-a p { font-size: 0.9rem; line-height: 1.85; font-weight: 300; padding-bottom: 32px; max-width: 740px; }
 
-    .faq-a p {
-      font-size: 0.9rem;
-      line-height: 1.85;
-      font-weight: 300;
-      padding-bottom: 32px;
-      max-width: 740px;
-    }
+    /* ── FOOTER ───────────────────────────────────────────── */
 
-    /* ── FOOTER ───────────────────────────────────────────────────── */
-
-    footer {
-      border-top: 1px solid var(--black);
-      padding: 64px var(--px) 48px;
-    }
+    footer { border-top: 1px solid var(--black); padding: 64px var(--px) 48px; }
 
     .footer-top {
       display: flex;
@@ -526,17 +480,18 @@
       gap: 48px;
     }
 
-    .footer-logo {
-      height: 28px;
-      width: auto;
-      display: block;
+    .footer-logo-wrap { display: flex; flex-direction: column; gap: 24px; }
+    .footer-logo { height: 28px; width: auto; display: block; }
+
+    .footer-tel {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      font-weight: 300;
+      color: #555;
+      text-decoration: none;
     }
 
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 36px;
-    }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 36px; }
 
     .footer-links a {
       font-size: 0.72rem;
@@ -548,150 +503,166 @@
       transition: opacity 0.2s;
     }
 
-    .footer-links a:hover {
-      opacity: 0.4;
-    }
+    .footer-links a:hover { opacity: 0.4; }
 
-    .footer-rule {
-      width: 100%;
-      height: 1px;
-      background: var(--black);
-      margin-bottom: 36px;
-    }
+    .footer-rule { width: 100%; height: 1px; background: var(--black); margin-bottom: 36px; }
 
-    .footer-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
 
-    .footer-bottom p {
-      font-size: 0.72rem;
-      font-weight: 300;
-      letter-spacing: 0.06em;
-      color: #555;
-    }
+    .footer-bottom p { font-size: 0.72rem; font-weight: 300; letter-spacing: 0.06em; color: #555; }
 
-    /* ── ANIMATIONS ───────────────────────────────────────────────── */
+    /* ── ANIMATIONS ───────────────────────────────────────── */
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(28px); }
-      to   { opacity: 1; transform: translateY(0);    }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes scrollPulse {
-      0%, 100% { transform: scaleY(1);   opacity: 1;   }
+      0%, 100% { transform: scaleY(1);   opacity: 1; }
       50%       { transform: scaleY(0.3); opacity: 0.4; }
     }
 
-    /* ── RESPONSIVE ───────────────────────────────────────────────── */
-
-    @media (max-width: 900px) {
-      .why-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .why-card {
-        padding: 40px 32px 40px 0;
-      }
-
-      .why-card:nth-child(2) {
-        border-right: none;
-        padding-right: 0;
-      }
-
-      .why-card:nth-child(2):not(:first-child) {
-        padding-left: 32px;
-      }
-
-      .why-card:nth-child(3),
-      .why-card:nth-child(4) {
-        border-top: 1px solid var(--black);
-      }
-
-      .pricing-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .pricing-card {
-        border-right: none;
-        border-bottom: 1px solid var(--black);
-      }
-
-      .pricing-card.featured {
-        border-bottom: 1px solid var(--white);
-      }
-
-      .pricing-card:last-child {
-        border-bottom: none;
-      }
-
-      .work-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .work-card {
-        aspect-ratio: 16 / 7;
-      }
+    @keyframes cursorBlink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
     }
 
+    /* ── RESPONSIVE 900px ─────────────────────────────────── */
+
+    @media (max-width: 900px) {
+      .why-grid { grid-template-columns: repeat(2, 1fr); }
+
+      .why-card:nth-child(2) { border-right: none; }
+      .why-card:nth-child(3), .why-card:nth-child(4) { border-top: 1px solid var(--black); }
+
+      .pricing-grid { grid-template-columns: 1fr; }
+      .pricing-card { border-right: none; border-bottom: 1px solid var(--black); }
+      .pricing-card.featured { border-bottom: 1px solid #333; }
+      .pricing-card:last-child { border-bottom: none; }
+
+      .work-grid { grid-template-columns: 1fr; }
+      .work-card { aspect-ratio: 16 / 9; }
+    }
+
+    /* ── RESPONSIVE 640px ─────────────────────────────────── */
+
     @media (max-width: 640px) {
-      .why-grid {
-        grid-template-columns: 1fr;
+      /* Hero: only headline+rule visible; logo and tagline appear on scroll */
+      #hero { justify-content: center; }
+
+      .hero-top {
+        position: absolute;
+        top: var(--px);
+        left: var(--px);
+        animation: none;
+        opacity: 0;
+        transition: opacity 0.7s ease;
       }
+
+      .hero-top.scroll-in { opacity: 1; }
+
+      .hero-main { padding: 0; }
+
+      .hero-bottom {
+        position: absolute;
+        bottom: var(--px);
+        left: var(--px);
+        right: var(--px);
+      }
+
+      .hero-tagline {
+        animation: none;
+        opacity: 0;
+        transition: opacity 0.7s ease;
+      }
+
+      .hero-tagline.scroll-in { opacity: 1; }
+
+      .hero-scroll { display: none; }
+
+      /* Why cards — force reset all specificity conflicts */
+      .why-grid { grid-template-columns: 1fr; border-top: none; }
 
       .why-card {
-        border-right: none;
+        padding: 40px 0 !important;
+        border-right: none !important;
         border-bottom: 1px solid var(--black);
-        padding: 36px 0;
+        text-align: left;
       }
 
-      .why-card:not(:first-child) {
-        padding-left: 0;
+      .why-card:nth-child(3), .why-card:nth-child(4) { border-top: none; }
+      .why-card:last-child { border-bottom: none; }
+
+      /* Work cards */
+      .work-card {
+        aspect-ratio: unset;
+        min-height: 200px;
+        padding: 32px 28px;
       }
 
-      .why-card:last-child {
-        border-bottom: none;
+      /* Mobile pricing tabs */
+      .pricing-tabs {
+        display: flex;
+        border: 1px solid var(--black);
+        margin-bottom: -1px;
+        position: relative;
+        z-index: 1;
       }
 
-      .process-item {
-        grid-template-columns: 1fr;
-        gap: 12px;
+      .ptab {
+        flex: 1;
+        padding: 18px 6px;
+        background: var(--white);
+        color: var(--black);
+        border: none;
+        border-right: 1px solid var(--black);
+        font-family: var(--font);
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
       }
 
-      .footer-top {
-        flex-direction: column;
-        gap: 32px;
-      }
+      .ptab:last-child { border-right: none; }
+      .ptab.active { background: var(--black); color: var(--white); }
 
-      .footer-links {
-        gap: 24px;
-      }
+      .pricing-grid { display: block; }
+      .pricing-card { display: none; border: 1px solid var(--black); border-top: none; }
+      .pricing-card.active-mobile { display: flex; }
+      .pricing-card.featured { border-bottom: 1px solid #333; }
 
-      .hero-scroll {
-        display: none;
-      }
+      /* Section breathing room */
+      .section-meta { margin-bottom: 40px; }
+      .section-headline { margin-bottom: 48px; }
+
+      /* Process */
+      .process-item { grid-template-columns: 1fr; gap: 12px; }
+
+      /* CTA strip */
+      .cta-strip { flex-direction: column; align-items: flex-start; }
+      .cta-strip-btn { padding: 20px 36px; width: 100%; }
+
+      /* Footer */
+      .footer-top { flex-direction: column; gap: 32px; }
+      .footer-links { gap: 20px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ──────────────────────────────────────────────────────────── -->
-  <!-- HERO                                                         -->
-  <!-- ──────────────────────────────────────────────────────────── -->
+  <!-- HERO -->
   <section id="hero">
-
     <div class="hero-top">
       <img src="brand_assets/YSA_Logo.png" alt="YSA" class="hero-logo">
     </div>
-
     <div class="hero-main">
       <div class="hero-rule"></div>
       <h1 class="hero-headline">du verdienst es,<br>gesehen zu werden</h1>
+      <a href="tel:01742143654" class="hero-cta">Jetzt Kostenlos Anfragen</a>
     </div>
-
     <div class="hero-bottom">
       <div class="hero-scroll">
         <span class="hero-scroll-label">scroll</span>
@@ -702,20 +673,12 @@
         <div class="hero-tagline-rule"></div>
       </div>
     </div>
-
   </section>
 
-  <!-- ──────────────────────────────────────────────────────────── -->
-  <!-- WARUM DU UNS BRAUCHST                                        -->
-  <!-- ──────────────────────────────────────────────────────────── -->
+  <!-- WARUM DU UNS BRAUCHST -->
   <section id="why">
-
-    <div class="section-meta reveal">
-      <span>01 — Warum du uns brauchst</span>
-    </div>
-
+    <div class="section-meta reveal"><span>01 — Warum du uns brauchst</span></div>
     <h2 class="section-headline reveal">dein business<br>verdient mehr.</h2>
-
     <div class="why-grid">
       <div class="why-card reveal">
         <span class="why-num">— 01</span>
@@ -725,7 +688,7 @@
       <div class="why-card reveal">
         <span class="why-num">— 02</span>
         <h3>Veralteter erster Eindruck</h3>
-        <p>Deine Website ist dein digitales Schaufenster. Ein veralteter oder unprofessioneller Auftritt signalisiert das Falsche — noch bevor ein Besucher eine einzige Zeile über dein Angebot gelesen hat.</p>
+        <p>Deine Website ist dein digitales Schaufenster. Ein veralteter Auftritt signalisiert das Falsche — noch bevor ein Besucher eine einzige Zeile über dein Angebot gelesen hat.</p>
       </div>
       <div class="why-card reveal">
         <span class="why-num">— 03</span>
@@ -735,41 +698,30 @@
       <div class="why-card reveal">
         <span class="why-num">— 04</span>
         <h3>Schwache Reputation</h3>
-        <p>Der heutige Käufer liest Bewertungen, bevor er anruft. Ein vernachlässigtes Google-Profil signalisiert Misstrauen. Wir helfen dir, das Vertrauen aufzubauen, das Fremde in Kunden verwandelt.</p>
+        <p>Der heutige Käufer liest Bewertungen, bevor er anruft. Ein vernachlässigtes Google-Profil signalisiert Misstrauen. Wir bauen den Beweis auf, der Fremde in Kunden verwandelt.</p>
       </div>
     </div>
-
   </section>
 
-  <!-- ──────────────────────────────────────────────────────────── -->
-  <!-- WAS WIR TUN                                                  -->
-  <!-- ──────────────────────────────────────────────────────────── -->
+  <!-- WAS WIR TUN -->
   <section id="process">
-
-    <div class="section-meta reveal">
-      <span>02 — Was wir tun</span>
-    </div>
-
+    <div class="section-meta reveal"><span>02 — Was wir tun</span></div>
     <h2 class="section-headline reveal">unser prozess.</h2>
-
     <div class="process-list">
-
       <div class="process-item reveal">
         <div class="process-num">01</div>
         <div class="process-body">
           <h3>Analyse & Strategie</h3>
-          <p>Wir beginnen damit, dein Business, deinen Markt und deine Ziele zu verstehen. Eine gründliche Analyse deiner aktuellen Online-Präsenz bildet das Fundament für alles, was wir gemeinsam aufbauen.</p>
+          <p>Wir beginnen damit, dein Business, deinen Markt und deine Ziele zu verstehen. Eine gründliche Analyse deiner Online-Präsenz bildet das Fundament für alles, was wir gemeinsam aufbauen.</p>
         </div>
       </div>
-
       <div class="process-item reveal">
         <div class="process-num">02</div>
         <div class="process-body">
           <h3>Webdesign & Entwicklung</h3>
-          <p>Wir gestalten und entwickeln eine Website, die die Qualität deines Unternehmens widerspiegelt — schnell, modern, mobiloptimiert und darauf ausgelegt, Besucher in zahlende Kunden zu verwandeln.</p>
+          <p>Wir gestalten und entwickeln eine Website, die die Qualität deines Unternehmens widerspiegelt — schnell, modern, mobiloptimiert und darauf ausgelegt, Besucher in Kunden zu verwandeln.</p>
         </div>
       </div>
-
       <div class="process-item reveal">
         <div class="process-num">03</div>
         <div class="process-body">
@@ -777,7 +729,6 @@
           <p>Wir optimieren deine Seite für Suchmaschinen und richten dein Google-Unternehmensprofil ein, damit du genau dort erscheinst, wo deine Kunden suchen. Lokal. Sichtbar. Autoritär.</p>
         </div>
       </div>
-
       <div class="process-item reveal">
         <div class="process-num">04</div>
         <div class="process-body">
@@ -785,65 +736,46 @@
           <p>Wir implementieren Systeme zum Sammeln von Bewertungen, zum Aufbau von Vertrauen und zur Steigerung des Traffics — sodass deine Online-Präsenz langfristig für dich arbeitet.</p>
         </div>
       </div>
-
     </div>
-
   </section>
 
-  <!-- ──────────────────────────────────────────────────────────── -->
-  <!-- WAS WIR BISHER ERREICHT HABEN                                -->
-  <!-- ──────────────────────────────────────────────────────────── -->
+  <!-- AUSGEWÄHLTE PROJEKTE -->
   <section id="work">
-
-    <div class="section-meta reveal">
-      <span>03 — Was wir bisher erreicht haben</span>
-    </div>
-
+    <div class="section-meta reveal"><span>03 — Was wir bisher erreicht haben</span></div>
     <h2 class="section-headline reveal">ausgewählte<br>projekte.</h2>
-
     <div class="work-grid reveal">
       <div class="work-card">
         <span class="work-tag">Webdesign — SEO</span>
         <h3>Projektname<br>Platzhalter</h3>
-        <div class="work-foot">
-          <span>Branche Platzhalter</span>
-          <span class="work-arrow">→</span>
-        </div>
+        <div class="work-foot"><span>Branche Platzhalter</span><span class="work-arrow">→</span></div>
       </div>
       <div class="work-card">
         <span class="work-tag">Google Profil — Reputation</span>
         <h3>Projektname<br>Platzhalter</h3>
-        <div class="work-foot">
-          <span>Branche Platzhalter</span>
-          <span class="work-arrow">→</span>
-        </div>
+        <div class="work-foot"><span>Branche Platzhalter</span><span class="work-arrow">→</span></div>
       </div>
       <div class="work-card">
         <span class="work-tag">Komplettpaket</span>
         <h3>Projektname<br>Platzhalter</h3>
-        <div class="work-foot">
-          <span>Branche Platzhalter</span>
-          <span class="work-arrow">→</span>
-        </div>
+        <div class="work-foot"><span>Branche Platzhalter</span><span class="work-arrow">→</span></div>
       </div>
     </div>
-
   </section>
 
-  <!-- ──────────────────────────────────────────────────────────── -->
-  <!-- PREISE                                                        -->
-  <!-- ──────────────────────────────────────────────────────────── -->
+  <!-- PREISE -->
   <section id="pricing">
-
-    <div class="section-meta reveal">
-      <span>04 — Was wir kosten</span>
-    </div>
-
+    <div class="section-meta reveal"><span>04 — Was wir kosten</span></div>
     <h2 class="section-headline reveal">transparente<br>preise.</h2>
 
-    <div class="pricing-grid reveal">
+    <!-- Mobile tab buttons (hidden on desktop) -->
+    <div class="pricing-tabs">
+      <button class="ptab active" data-idx="0">Starter</button>
+      <button class="ptab" data-idx="1">Professionell</button>
+      <button class="ptab" data-idx="2">Growth</button>
+    </div>
 
-      <div class="pricing-card">
+    <div class="pricing-grid reveal">
+      <div class="pricing-card active-mobile">
         <p class="pricing-tier">Starter</p>
         <p class="pricing-price">€100</p>
         <p class="pricing-period">/ monatlich</p>
@@ -852,9 +784,8 @@
           <li>Hosting + Domain</li>
           <li>Monatliche Betreuung</li>
         </ul>
-        <a href="#" class="btn">Jetzt starten</a>
+        <a href="tel:01742143654" class="btn">Jetzt starten</a>
       </div>
-
       <div class="pricing-card featured">
         <p class="pricing-tier">Professionell</p>
         <p class="pricing-price">€300</p>
@@ -864,9 +795,8 @@
           <li>Google Profil Optimierung + Maintenance</li>
           <li>Custom Buchungsformular für Kunden</li>
         </ul>
-        <a href="#" class="btn">Beliebteste Wahl</a>
+        <a href="tel:01742143654" class="btn">Beliebteste Wahl</a>
       </div>
-
       <div class="pricing-card">
         <p class="pricing-tier">Growth</p>
         <p class="pricing-price">€750</p>
@@ -877,134 +807,158 @@
           <li>Custom Buchungsformulare für Kunden</li>
           <li>Google Analytics</li>
         </ul>
-        <a href="#" class="btn">Kontakt aufnehmen</a>
+        <a href="tel:01742143654" class="btn">Kontakt aufnehmen</a>
       </div>
-
     </div>
-
   </section>
 
-  <!-- ──────────────────────────────────────────────────────────── -->
-  <!-- FAQ                                                          -->
-  <!-- ──────────────────────────────────────────────────────────── -->
+  <!-- CTA STRIP -->
+  <div class="cta-strip">
+    <p class="cta-strip-headline">bereit,<br>gesehen zu werden?</p>
+    <a href="tel:01742143654" class="cta-strip-btn">
+      Jetzt Kostenlos Anfragen
+      <span>0174 2143654</span>
+    </a>
+  </div>
+
+  <!-- FAQ -->
   <section id="faq">
-
-    <div class="section-meta reveal">
-      <span>05 — FAQ</span>
-    </div>
-
+    <div class="section-meta reveal"><span>05 — FAQ</span></div>
     <h2 class="section-headline reveal">häufige<br>fragen.</h2>
-
     <div class="faq-list">
-
       <div class="faq-item reveal">
-        <div class="faq-q">
-          <h3>Wie lange dauert es, bis man Ergebnisse sieht?</h3>
-          <div class="faq-plus"></div>
-        </div>
-        <div class="faq-a">
-          <p>Das hängt vom jeweiligen Service ab. Eine neue Website geht innerhalb weniger Wochen live. SEO-Verbesserungen werden typischerweise nach 3–6 Monaten sichtbar, wenn Suchmaschinen deine Inhalte indexieren und deine Autorität wächst. Google-Profil-Optimierungen zeigen oft schon innerhalb weniger Tage Wirkung.</p>
-        </div>
+        <div class="faq-q"><h3>Wie lange dauert es, bis man Ergebnisse sieht?</h3><div class="faq-plus"></div></div>
+        <div class="faq-a"><p>Das hängt vom jeweiligen Service ab. Eine neue Website geht innerhalb weniger Wochen live. SEO-Verbesserungen werden typischerweise nach 3–6 Monaten sichtbar. Google-Profil-Optimierungen zeigen oft schon innerhalb weniger Tage Wirkung.</p></div>
       </div>
-
       <div class="faq-item reveal">
-        <div class="faq-q">
-          <h3>Brauche ich alle Leistungen, oder kann ich nur eine wählen?</h3>
-          <div class="faq-plus"></div>
-        </div>
-        <div class="faq-a">
-          <p>Du kannst genau dort anfangen, wo du es brauchst. Viele Kunden starten mit einer Website oder dem Google-Profil und ergänzen SEO später. Wir beraten dich ehrlich darüber, wo der größte Hebel für deine Situation liegt — ohne unnötiges Upselling.</p>
-        </div>
+        <div class="faq-q"><h3>Brauche ich alle Leistungen, oder kann ich nur eine wählen?</h3><div class="faq-plus"></div></div>
+        <div class="faq-a"><p>Du kannst genau dort anfangen, wo du es brauchst. Viele Kunden starten mit einer Website oder dem Google-Profil und ergänzen SEO später. Wir beraten dich ehrlich — ohne unnötiges Upselling.</p></div>
       </div>
-
       <div class="faq-item reveal">
-        <div class="faq-q">
-          <h3>Mit welchen Branchen arbeitet ihr?</h3>
-          <div class="faq-plus"></div>
-        </div>
-        <div class="faq-a">
-          <p>Wir arbeiten mit lokalen Unternehmen, Dienstleistern, Restaurants, Arztpraxen, Beratern und mehr. Wenn deine Kunden online nach dir suchen — und das tun sie —, helfen wir dir, diese Nachfrage zu erfassen und in echtes Geschäft umzuwandeln.</p>
-        </div>
+        <div class="faq-q"><h3>Mit welchen Branchen arbeitet ihr?</h3><div class="faq-plus"></div></div>
+        <div class="faq-a"><p>Wir arbeiten mit lokalen Unternehmen, Dienstleistern, Restaurants, Arztpraxen, Beratern und mehr. Wenn deine Kunden online nach dir suchen — und das tun sie — helfen wir dir, diese Nachfrage in echtes Geschäft umzuwandeln.</p></div>
       </div>
-
       <div class="faq-item reveal">
-        <div class="faq-q">
-          <h3>Was passiert, nachdem die Website online ist?</h3>
-          <div class="faq-plus"></div>
-        </div>
-        <div class="faq-a">
-          <p>Wir bieten laufende Wartung, SEO-Monitoring und Wachstumsunterstützung an. Deine Online-Präsenz ist kein einmaliges Projekt — sie entfaltet ihre volle Wirkung durch kontinuierliche Aufmerksamkeit. Wir können dein langfristiger Partner dafür sein.</p>
-        </div>
+        <div class="faq-q"><h3>Was passiert, nachdem die Website online ist?</h3><div class="faq-plus"></div></div>
+        <div class="faq-a"><p>Wir bieten laufende Wartung, SEO-Monitoring und Wachstumsunterstützung an. Deine Online-Präsenz ist kein einmaliges Projekt — sie entfaltet ihre volle Wirkung durch kontinuierliche Aufmerksamkeit.</p></div>
       </div>
-
       <div class="faq-item reveal">
-        <div class="faq-q">
-          <h3>Wie fange ich an?</h3>
-          <div class="faq-plus"></div>
-        </div>
-        <div class="faq-a">
-          <p>Einfach melden. Wir vereinbaren ein kostenloses Erstgespräch, um deine Ziele zu verstehen und den richtigen Weg für dich zu empfehlen. Kein Druck, kein Fachjargon — nur ein klares Gespräch darüber, was deinem Business am meisten bringen wird.</p>
-        </div>
+        <div class="faq-q"><h3>Wie fange ich an?</h3><div class="faq-plus"></div></div>
+        <div class="faq-a"><p>Einfach melden. Wir vereinbaren ein kostenloses Erstgespräch, um deine Ziele zu verstehen und den richtigen Weg für dich zu empfehlen. Kein Druck, kein Fachjargon — nur ein klares Gespräch über das, was deinem Business am meisten bringt.</p></div>
       </div>
-
     </div>
-
   </section>
 
-  <!-- ──────────────────────────────────────────────────────────── -->
-  <!-- FOOTER                                                       -->
-  <!-- ──────────────────────────────────────────────────────────── -->
+  <!-- FOOTER -->
   <footer>
-
     <div class="footer-top">
-      <img src="brand_assets/YSA_Logo.png" alt="YSA" class="footer-logo">
+      <div class="footer-logo-wrap">
+        <img src="brand_assets/YSA_Logo.png" alt="YSA" class="footer-logo">
+        <a href="tel:01742143654" class="footer-tel">0174 2143654</a>
+      </div>
       <nav class="footer-links">
         <a href="#why">Warum wir</a>
         <a href="#process">Prozess</a>
         <a href="#work">Referenzen</a>
         <a href="#pricing">Preise</a>
         <a href="#faq">FAQ</a>
-        <a href="mailto:ysacooperation@gmail.com">Kontakt</a>
+        <a href="tel:01742143654">Kontakt</a>
+        <a href="impressum.html">Impressum</a>
+        <a href="agb.html">AGB</a>
       </nav>
     </div>
-
     <div class="footer-rule"></div>
-
     <div class="footer-bottom">
       <p>© 2025 YSA. Alle Rechte vorbehalten.</p>
       <p>Deine Online-Präsenz, auf das nächste Level.</p>
     </div>
-
   </footer>
 
   <script>
-    // Scroll reveal via IntersectionObserver
-    const revealEls = document.querySelectorAll('.reveal');
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in');
-          io.unobserve(entry.target);
+    // ── Scroll restoration ──────────────────────────────────────
+    window.scrollTo(0, 0);
+
+    // ── Typewriter ──────────────────────────────────────────────
+    (function () {
+      const el = document.querySelector('.hero-headline');
+      const raw = el.innerHTML;
+      el.innerHTML = '';
+      el.classList.add('typing');
+
+      const tokens = [];
+      let i = 0;
+      while (i < raw.length) {
+        const chunk = raw.slice(i, i + 4).toLowerCase();
+        if (chunk === '<br>') { tokens.push({ br: true }); i += 4; }
+        else { tokens.push({ ch: raw[i] }); i++; }
+      }
+
+      let idx = 0;
+      function tick() {
+        if (idx >= tokens.length) {
+          el.classList.replace('typing', 'done');
+          setTimeout(() => {
+            const cta = document.querySelector('.hero-cta');
+            if (cta) cta.classList.add('hero-cta-visible');
+          }, 200);
+          return;
         }
+        const t = tokens[idx++];
+        el.innerHTML += t.br ? '<br>' : t.ch;
+        setTimeout(tick, t.br ? 0 : 46);
+      }
+      setTimeout(tick, 500);
+    })();
+
+    // ── Mobile hero: logo + tagline appear on first scroll ──────
+    const heroTop     = document.querySelector('.hero-top');
+    const heroTagline = document.querySelector('.hero-tagline');
+    let heroRevealed  = false;
+
+    function onHeroScroll() {
+      if (!heroRevealed && window.innerWidth <= 640 && window.scrollY > 20) {
+        heroRevealed = true;
+        heroTop.classList.add('scroll-in');
+        heroTagline.classList.add('scroll-in');
+        window.removeEventListener('scroll', onHeroScroll);
+      }
+    }
+
+    window.addEventListener('scroll', onHeroScroll, { passive: true });
+
+    // ── Mobile pricing tabs ─────────────────────────────────────
+    const ptabs  = document.querySelectorAll('.ptab');
+    const pcards = document.querySelectorAll('.pricing-card');
+
+    ptabs.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = parseInt(btn.dataset.idx, 10);
+        ptabs.forEach((b, i)  => b.classList.toggle('active', i === idx));
+        pcards.forEach((c, i) => c.classList.toggle('active-mobile', i === idx));
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -48px 0px' });
+    });
 
-    revealEls.forEach(el => io.observe(el));
+    // ── Scroll reveal ───────────────────────────────────────────
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-    // FAQ accordion
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // ── FAQ accordion ───────────────────────────────────────────
     document.querySelectorAll('.faq-q').forEach(trigger => {
       trigger.addEventListener('click', () => {
         const item   = trigger.closest('.faq-item');
         const answer = item.querySelector('.faq-a');
         const isOpen = item.classList.contains('open');
 
-        // Close all
-        document.querySelectorAll('.faq-item.open').forEach(open => {
-          open.classList.remove('open');
-          open.querySelector('.faq-a').style.maxHeight = '0';
+        document.querySelectorAll('.faq-item.open').forEach(o => {
+          o.classList.remove('open');
+          o.querySelector('.faq-a').style.maxHeight = '0';
         });
 
-        // Open clicked (if it was closed)
         if (!isOpen) {
           item.classList.add('open');
           answer.style.maxHeight = answer.scrollHeight + 'px';
@@ -1012,6 +966,5 @@
       });
     });
   </script>
-
 </body>
 </html>
