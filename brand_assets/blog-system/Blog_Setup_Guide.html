@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog System Setup Guide — YSA</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #000;
+      --white: #fff;
+      --grey: #f4f4f4;
+      --border: #e0e0e0;
+      --accent: #000;
+      --font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --max: 780px;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--white);
+      color: var(--black);
+      line-height: 1.65;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .cover {
+      background: var(--black);
+      color: var(--white);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 64px;
+    }
+
+    .cover-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.5;
+    }
+
+    .cover-title {
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 900;
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      margin-top: 40px;
+    }
+
+    .cover-subtitle {
+      font-size: 1.1rem;
+      font-weight: 400;
+      opacity: 0.65;
+      margin-top: 24px;
+      max-width: 500px;
+      line-height: 1.6;
+    }
+
+    .cover-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      font-size: 0.75rem;
+      opacity: 0.4;
+      letter-spacing: 0.05em;
+    }
+
+    .cover-version {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.4;
+      margin-top: 16px;
+    }
+
+    /* ── CONTENT ─────────────────────────────────────────── */
+
+    .page-break { page-break-after: always; }
+
+    .content {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 64px 40px;
+    }
+
+    /* TOC */
+    .toc {
+      padding: 64px 40px;
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+
+    .toc-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      opacity: 0.5;
+    }
+
+    .toc ol {
+      list-style: none;
+      counter-reset: toc;
+    }
+
+    .toc ol li {
+      counter-increment: toc;
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.95rem;
+    }
+
+    .toc ol li::before {
+      content: counter(toc, decimal-leading-zero);
+      font-size: 0.7rem;
+      font-weight: 700;
+      opacity: 0.3;
+      min-width: 28px;
+    }
+
+    .toc-page {
+      margin-left: auto;
+      font-size: 0.75rem;
+      opacity: 0.35;
+    }
+
+    /* Sections */
+    .section-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0.4;
+      margin-bottom: 8px;
+    }
+
+    h1.section-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      margin-bottom: 40px;
+      padding-bottom: 32px;
+      border-bottom: 3px solid var(--black);
+    }
+
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-top: 48px;
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+
+    h3 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 32px;
+      margin-bottom: 12px;
+      opacity: 0.5;
+    }
+
+    p {
+      margin-bottom: 16px;
+      color: #222;
+    }
+
+    /* Steps */
+    .steps { margin: 24px 0; }
+
+    .step {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+      align-items: start;
+    }
+
+    .step-num {
+      width: 40px;
+      height: 40px;
+      background: var(--black);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 900;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .step-body h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .step-body p {
+      font-size: 0.88rem;
+      color: #444;
+      margin-bottom: 0;
+    }
+
+    /* Code */
+    pre, code {
+      font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+      font-size: 0.8rem;
+    }
+
+    pre {
+      background: var(--grey);
+      border-left: 3px solid var(--black);
+      padding: 20px 24px;
+      overflow-x: auto;
+      margin: 20px 0;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    code {
+      background: var(--grey);
+      padding: 2px 6px;
+      font-size: 0.8rem;
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 0.85rem;
+    }
+
+    th {
+      text-align: left;
+      padding: 10px 12px;
+      background: var(--black);
+      color: var(--white);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) td { background: var(--grey); }
+
+    /* Callout */
+    .callout {
+      border: 2px solid var(--black);
+      padding: 20px 24px;
+      margin: 24px 0;
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 12px;
+    }
+
+    .callout-icon {
+      font-size: 1.1rem;
+      margin-top: 1px;
+    }
+
+    .callout-body {
+      font-size: 0.88rem;
+      color: #222;
+    }
+
+    .callout-body strong { display: block; margin-bottom: 4px; font-size: 0.9rem; }
+
+    /* Warning */
+    .warning {
+      background: var(--black);
+      color: var(--white);
+      padding: 20px 24px;
+      margin: 24px 0;
+      font-size: 0.85rem;
+    }
+
+    .warning strong { display: block; margin-bottom: 4px; }
+
+    /* Tag */
+    .tag {
+      display: inline-block;
+      border: 1.5px solid var(--black);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      margin-right: 6px;
+      margin-bottom: 6px;
+    }
+
+    /* Checklist */
+    .checklist {
+      list-style: none;
+      margin: 20px 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.88rem;
+    }
+
+    .checklist li::before {
+      content: '';
+      display: block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--black);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Prompt box */
+    .prompt-box {
+      border: 2px solid var(--black);
+      margin: 24px 0;
+    }
+
+    .prompt-box-header {
+      background: var(--black);
+      color: var(--white);
+      padding: 10px 20px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .prompt-box pre {
+      border: none;
+      border-left: none;
+      margin: 0;
+      padding: 24px;
+      background: #fafafa;
+      font-size: 0.78rem;
+    }
+
+    /* Flow diagram */
+    .flow {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin: 24px 0;
+      flex-wrap: wrap;
+    }
+
+    .flow-item {
+      border: 2px solid var(--black);
+      padding: 12px 18px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .flow-arrow {
+      font-size: 1.2rem;
+      padding: 0 8px;
+      opacity: 0.4;
+    }
+
+    /* Divider */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 40px 0;
+    }
+
+    hr.thick {
+      border: none;
+      border-top: 3px solid var(--black);
+      margin: 48px 0;
+    }
+
+    @media print {
+      .cover { min-height: 100vh; }
+      .page-break { page-break-after: always; break-after: page; }
+      pre { white-space: pre-wrap; }
+      @page { margin: 0; size: A4; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- COVER                                                        -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<div class="cover">
+  <div>
+    <div class="cover-label">YSA — Internes Dokument</div>
+  </div>
+  <div>
+    <h1 class="cover-title">Blog<br>System<br>Setup</h1>
+    <p class="cover-subtitle">Schritt-für-Schritt Anleitung: Notion als CMS mit automatischer Website-Integration — für YSA und alle Kundenprojekte.</p>
+    <div class="cover-version">Version 1.0 &nbsp;·&nbsp; Juni 2025</div>
+  </div>
+  <div class="cover-footer">
+    <span>Nur für internes YSA-Team</span>
+    <span>ysacooperation@gmail.com</span>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- INHALTSVERZEICHNIS                                           -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<div class="toc">
+  <p class="toc-title">Inhaltsverzeichnis</p>
+  <ol>
+    <li>Wie das System funktioniert <span class="toc-page">3</span></li>
+    <li>Was gebaut wird (Überblick) <span class="toc-page">3</span></li>
+    <li>Notion: Datenbank einrichten <span class="toc-page">4</span></li>
+    <li>Netlify: Environment Variables setzen <span class="toc-page">5</span></li>
+    <li>Claude Code: Master Prompt ausführen <span class="toc-page">6</span></li>
+    <li>Einen neuen Blogartikel schreiben <span class="toc-page">7</span></li>
+    <li>Für neue Kundenprojekte anpassen <span class="toc-page">8</span></li>
+    <li>Anhang: Master Prompt (vollständig) <span class="toc-page">9</span></li>
+  </ol>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 01 — WIE ES FUNKTIONIERT                                     -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<div class="content">
+  <p class="section-label">01</p>
+  <h1 class="section-title">Wie das<br>System<br>funktioniert</h1>
+
+  <p>Du schreibst Blogartikel in Notion — deiner gewohnten Umgebung. Sobald du einen Artikel als "Published" markierst, erscheint er automatisch auf der Website. Kein manuelles Exportieren, kein Code anfassen.</p>
+
+  <div class="flow" style="margin: 32px 0;">
+    <div class="flow-item">Notion<br><small style="font-weight:400;font-size:0.7rem">Artikel schreiben</small></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-item">Netlify<br>Function<br><small style="font-weight:400;font-size:0.7rem">API Proxy</small></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-item">Website<br><small style="font-weight:400;font-size:0.7rem">Rendert automatisch</small></div>
+  </div>
+
+  <p>Technisch: Die Website hat kleine Server-Funktionen (Netlify Functions), die bei jedem Seitenaufruf die neuesten Artikel von Notion holen und anzeigen. Dein Notion-API-Key bleibt dabei sicher — er ist nie im öffentlichen Code.</p>
+
+  <h2>Was automatisch passiert</h2>
+  <ul style="margin: 0 0 16px 20px; line-height: 2;">
+    <li>Neuer Artikel in Notion → erscheint auf <code>/blog</code></li>
+    <li>Artikel-Titel → wird zur URL <code>/blog/dein-slug</code></li>
+    <li>Artikel unveröffentlicht → verschwindet von der Website</li>
+    <li>Artikel editiert → Website zeigt sofort die neue Version</li>
+  </ul>
+
+  <h2>Was <em>nicht</em> automatisch passiert</h2>
+  <p>Das Einmalige Setup (Notion Datenbank, Netlify Keys, Master Prompt ausführen) muss einmal pro Projekt gemacht werden. Danach: nur noch schreiben.</p>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 02 — ÜBERBLICK                                               -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<div class="content">
+  <p class="section-label">02</p>
+  <h1 class="section-title">Was gebaut<br>wird</h1>
+
+  <table>
+    <tr>
+      <th>Datei / Seite</th>
+      <th>URL</th>
+      <th>Funktion</th>
+    </tr>
+    <tr>
+      <td><code>blog/index.html</code></td>
+      <td><code>/blog</code></td>
+      <td>Übersicht aller Artikel als Cards</td>
+    </tr>
+    <tr>
+      <td><code>blog/post.html</code></td>
+      <td><code>/blog/{slug}</code></td>
+      <td>Einzelner Artikel (Template)</td>
+    </tr>
+    <tr>
+      <td>Homepage-Sektion</td>
+      <td><code>/</code></td>
+      <td>3 neueste Artikel als Vorschau</td>
+    </tr>
+    <tr>
+      <td><code>netlify/functions/get-posts.js</code></td>
+      <td><code>/api/get-posts</code></td>
+      <td>Holt alle Artikel von Notion</td>
+    </tr>
+    <tr>
+      <td><code>netlify/functions/get-post.js</code></td>
+      <td><code>/api/get-post?slug=…</code></td>
+      <td>Holt einen Artikel nach Slug</td>
+    </tr>
+    <tr>
+      <td><code>_redirects</code></td>
+      <td>—</td>
+      <td>Saubere URLs für Blog-Posts</td>
+    </tr>
+    <tr>
+      <td><code>netlify.toml</code></td>
+      <td>—</td>
+      <td>Netlify Konfiguration</td>
+    </tr>
+  </table>
+
+  <div class="callout">
+    <div class="callout-icon">ℹ</div>
+    <div class="callout-body">
+      <strong>Wichtig: Design wird automatisch übernommen</strong>
+      Der Master Prompt liest die bestehende <code>index.html</code> und übernimmt alle Farben, Fonts und Design-Entscheidungen automatisch. Keine manuelle Anpassung nötig.
+    </div>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 03 — NOTION SETUP                                            -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<div class="content">
+  <p class="section-label">03</p>
+  <h1 class="section-title">Notion:<br>Datenbank<br>einrichten</h1>
+
+  <div class="callout">
+    <div class="callout-icon">⏱</div>
+    <div class="callout-body">
+      <strong>Zeitaufwand: ca. 10 Minuten</strong>
+      Einmalig pro Projekt. Danach nur noch Artikel schreiben.
+    </div>
+  </div>
+
+  <h2>Teil A — Notion Integration erstellen</h2>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>Zu Notion Developers gehen</h4>
+        <p>Öffne <code>notion.so/my-integrations</code> im Browser und logge dich ein.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Neue Integration erstellen</h4>
+        <p>Klick auf "+ New integration". Name: z.B. <code>YSA Blog</code> oder <code>Kundenname Blog</code>.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>API Key kopieren</h4>
+        <p>Nach dem Erstellen siehst du den <strong>Internal Integration Secret</strong> (beginnt mit <code>secret_</code>). Diesen Key sicher speichern — er wird später in Netlify eingetragen.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>Permissions prüfen</h4>
+        <p>Die Integration braucht: "Read content". Schreibrechte sind nicht nötig.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <h2>Teil B — Blog-Datenbank erstellen</h2>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h4>Neue Seite in Notion erstellen</h4>
+        <p>In deinem Notion Workspace eine neue Seite anlegen, z.B. "Blog — [Kundenname]".</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <h4>Database (Full Page) einfügen</h4>
+        <p>Tippe <code>/database</code> und wähle "Database — Full page". Eine neue Tabelle wird erstellt.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">7</div>
+      <div class="step-body">
+        <h4>Properties anlegen — EXAKT diese Namen verwenden</h4>
+        <p>Die Spalten müssen exakt so heißen (Groß-/Kleinschreibung beachten):</p>
+      </div>
+    </div>
+  </div>
+
+  <table>
+    <tr>
+      <th>Property-Name</th>
+      <th>Notion-Typ</th>
+      <th>Beschreibung</th>
+    </tr>
+    <tr>
+      <td><strong>Title</strong></td>
+      <td>Title (Standard)</td>
+      <td>Artikelüberschrift — bereits vorhanden</td>
+    </tr>
+    <tr>
+      <td><strong>Slug</strong></td>
+      <td>Text</td>
+      <td>URL-Teil: z.B. <code>mein-erster-artikel</code></td>
+    </tr>
+    <tr>
+      <td><strong>Published</strong></td>
+      <td>Checkbox</td>
+      <td>Nur bei ✅ wird Artikel angezeigt</td>
+    </tr>
+    <tr>
+      <td><strong>Date</strong></td>
+      <td>Date</td>
+      <td>Veröffentlichungsdatum</td>
+    </tr>
+    <tr>
+      <td><strong>Summary</strong></td>
+      <td>Text</td>
+      <td>Kurze Teaser-Beschreibung (1–2 Sätze)</td>
+    </tr>
+    <tr>
+      <td><strong>Cover</strong></td>
+      <td>URL</td>
+      <td>Direkter Bild-Link. <strong>Empfehlung: 1600 × 900 px (16:9).</strong> Dieses eine Bild erscheint auf der Artikel-Seite, auf /blog und im Homepage-Teaser — immer als 16:9-Container. Ein Upload reicht für alle drei Stellen.</td>
+    </tr>
+  </table>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">8</div>
+      <div class="step-body">
+        <h4>Database ID kopieren</h4>
+        <p>Die Datenbank öffnen → auf die drei Punkte (⋯) klicken → "Copy link to view". In der URL steht die ID: <code>notion.so/{workspace}/{DATABASE_ID}?v=...</code> — den Teil zwischen letztem <code>/</code> und <code>?v=</code> kopieren.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">9</div>
+      <div class="step-body">
+        <h4>Integration mit Datenbank verbinden</h4>
+        <p>In der Datenbank: drei Punkte (⋯) → "Add connections" → deine Integration auswählen. Ohne diesen Schritt kann die API nicht auf die Daten zugreifen.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 04 — NETLIFY SETUP                                           -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<div class="content">
+  <p class="section-label">04</p>
+  <h1 class="section-title">Netlify:<br>Keys<br>eintragen</h1>
+
+  <div class="callout">
+    <div class="callout-icon">⏱</div>
+    <div class="callout-body">
+      <strong>Zeitaufwand: ca. 5 Minuten</strong>
+      Die API-Keys werden sicher in Netlify gespeichert — nie im Code.
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>Netlify Dashboard öffnen</h4>
+        <p>Gehe zu <code>netlify.com</code> → das richtige Projekt auswählen.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Environment Variables öffnen</h4>
+        <p>Im Projekt: <strong>Site configuration</strong> → <strong>Environment variables</strong> → <strong>Add a variable</strong>.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>Erste Variable eintragen</h4>
+        <p>Key: <code>NOTION_API_KEY</code><br>Value: dein Notion Integration Secret (<code>secret_…</code>)</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>Zweite Variable eintragen</h4>
+        <p>Key: <code>NOTION_DATABASE_ID</code><br>Value: die Database ID aus Schritt 8 oben</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h4>Speichern & Deploy triggern</h4>
+        <p>Auf "Save" klicken. Dann <strong>Deploys</strong> → <strong>Trigger deploy</strong> → "Clear cache and deploy site".</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="warning">
+    <strong>Sicherheitshinweis</strong>
+    Notion API Key und Database ID niemals in Code-Dateien oder Git-Commits einfügen. Immer nur über Netlify Environment Variables — so sind sie nie öffentlich sichtbar.
+  </div>
+
+</div>
+
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 05 — MASTER PROMPT AUSFÜHREN                                 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<div class="content">
+  <p class="section-label">05</p>
+  <h1 class="section-title">Claude Code:<br>Master Prompt<br>ausführen</h1>
+
+  <div class="callout">
+    <div class="callout-icon">⏱</div>
+    <div class="callout-body">
+      <strong>Zeitaufwand: ca. 5 Minuten</strong>
+      Claude Code baut alles automatisch — du schaust nur zu und bestätigst.
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>Projektordner in Claude Code öffnen</h4>
+        <p>Claude Code starten → Projektordner der Website öffnen (dort, wo <code>index.html</code> liegt).</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Neue Konversation starten</h4>
+        <p>Wichtig: Neue Session starten, damit Claude Code frisch startet.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>Master Prompt einfügen</h4>
+        <p>Den vollständigen Inhalt aus <code>brand_assets/blog-system/MASTER_PROMPT.md</code> kopieren und in Claude Code einfügen. Nichts anpassen — der Prompt liest alles Nötige selbst.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>Ausführen lassen</h4>
+        <p>Claude Code liest die bestehende Homepage, extrahiert das Design und baut alle Dateien. Das dauert ca. 2–4 Minuten.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h4>Checkliste prüfen</h4>
+        <p>Am Ende zeigt Claude Code eine Checkliste. Alle 7 Punkte müssen ✅ sein.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <h4>GitHub pushen</h4>
+        <p>Die Änderungen zu GitHub pushen — Netlify deployed automatisch. Nach ca. 1 Minute ist die Blog-Sektion live.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>Was wenn etwas nicht stimmt?</h2>
+  <p>Wenn das Design nicht 100% passt oder etwas fehlt: einfach Claude Code in der gleichen Session sagen was konkret angepasst werden soll. Z.B.: <em>"Die Blog-Section auf der Homepage braucht mehr Abstand nach oben"</em> oder <em>"Die Cards sollen auf Mobile untereinander stehen"</em>.</p>
+
+</div>
+
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 06 — ARTIKEL SCHREIBEN                                       -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<div class="content">
+  <p class="section-label">06</p>
+  <h1 class="section-title">Einen<br>Artikel<br>schreiben</h1>
+
+  <p>Nach dem einmaligen Setup ist das Schreiben denkbar einfach. Alles passiert in Notion.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>Notion öffnen → Blog-Datenbank öffnen</h4>
+        <p>Die Datenbank, die du im Setup erstellt hast.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Neuen Eintrag erstellen</h4>
+        <p>Auf "+ New" klicken oder einfach in der Tabelle eine neue Zeile beginnen.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>Properties ausfüllen</h4>
+        <p>
+          <strong>Title:</strong> Artikelüberschrift<br>
+          <strong>Slug:</strong> URL-Teil in Kleinbuchstaben, Bindestriche statt Leerzeichen<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;→ Beispiel: Titel "Mein erster Artikel" → Slug <code>mein-erster-artikel</code><br>
+          <strong>Date:</strong> Datum eintragen<br>
+          <strong>Summary:</strong> 1–2 Sätze Teaser<br>
+          <strong>Cover:</strong> Direkter Bild-Link — <strong>1600 × 900 px (16:9)</strong> empfohlen.<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;→ Dasselbe Bild wird auf der Artikel-Seite, auf /blog und im Homepage-Teaser verwendet. Ein Upload reicht.
+        </p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>Artikel schreiben</h4>
+        <p>Den Artikel-Inhalt direkt in der Notion-Seite schreiben — wie einen normalen Notion-Eintrag. Überschriften, Listen, Bilder, Zitate — alles wird auf der Website korrekt dargestellt.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h4>Published aktivieren</h4>
+        <p>Wenn fertig: <strong>Published</strong> Checkbox ✅ aktivieren. Der Artikel erscheint sofort auf der Website — kein Deploy nötig.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>Slug-Regeln</h2>
+  <table>
+    <tr><th>Richtig</th><th>Falsch</th></tr>
+    <tr><td><code>mein-erster-artikel</code></td><td><code>Mein Erster Artikel</code></td></tr>
+    <tr><td><code>social-media-tipps-2025</code></td><td><code>social media tipps 2025</code></td></tr>
+    <tr><td><code>warum-online-praesenz-wichtig-ist</code></td><td><code>warum_online_praesenz</code></td></tr>
+  </table>
+  <p style="font-size:0.85rem; opacity:0.6; margin-top:8px;">Nur Kleinbuchstaben, Bindestriche, keine Umlaute, keine Leerzeichen, keine Unterstriche.</p>
+
+  <h2>Unterstützte Formatierungen</h2>
+  <div>
+    <span class="tag">Überschrift H1</span>
+    <span class="tag">Überschrift H2</span>
+    <span class="tag">Überschrift H3</span>
+    <span class="tag">Absatz</span>
+    <span class="tag">Aufzählung</span>
+    <span class="tag">Nummerierung</span>
+    <span class="tag">Zitat</span>
+    <span class="tag">Bild</span>
+    <span class="tag">Trennlinie</span>
+    <span class="tag">Callout</span>
+    <span class="tag">Code</span>
+    <span class="tag">Fett</span>
+    <span class="tag">Kursiv</span>
+  </div>
+
+</div>
+
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 07 — FÜR KUNDENPROJEKTE                                      -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<div class="content">
+  <p class="section-label">07</p>
+  <h1 class="section-title">Neue<br>Kunden<br>onboarden</h1>
+
+  <p>Das System ist als Template gebaut — für jeden neuen Kunden geht es schnell.</p>
+
+  <h2>Checkliste: Neues Kundenprojekt</h2>
+
+  <ul class="checklist">
+    <li>Notion Integration für den Kunden erstellen (oder eigene YSA Integration nutzen)</li>
+    <li>Notion Blog-Datenbank im Workspace des Kunden erstellen</li>
+    <li>Database ID und API Key notieren</li>
+    <li>Netlify Environment Variables im Kundenprojekt setzen</li>
+    <li>Claude Code mit Master Prompt im Kundenprojekt-Ordner ausführen</li>
+    <li>Ergebnis prüfen (alle 7 Checkboxen im Master Prompt)</li>
+    <li>Zu GitHub pushen → Netlify deployed automatisch</li>
+    <li>Kunden einweisen: Notion öffnen → Artikel schreiben → Published ✅</li>
+  </ul>
+
+  <h2>Was du dem Kunden übergibst</h2>
+
+  <table>
+    <tr>
+      <th>Deliverable</th>
+      <th>Format</th>
+    </tr>
+    <tr>
+      <td>Notion Datenbank (bereits eingerichtet)</td>
+      <td>Notion Link</td>
+    </tr>
+    <tr>
+      <td>Kurze Einweisung "Wie schreibe ich einen Artikel"</td>
+      <td>Seite 7 dieses Dokuments</td>
+    </tr>
+    <tr>
+      <td>Fertige Blog-Seite auf der Website</td>
+      <td>Live-URL</td>
+    </tr>
+  </table>
+
+  <h2>Anpassung des Designs pro Kunde</h2>
+  <p>Der Master Prompt liest die <code>index.html</code> jedes Kunden und übernimmt das Design automatisch. Keine manuelle CSS-Anpassung nötig. Falls nachträglich etwas nicht stimmt:</p>
+
+  <div class="prompt-box">
+    <div class="prompt-box-header">
+      <span>Beispiel-Prompt für Design-Korrekturen</span>
+    </div>
+    <pre>Schau dir blog/index.html an. Die Karten sollen exakt
+den gleichen Abstand haben wie die Sektionen in index.html.
+Passe das an und stelle sicher, dass es auf Mobile
+auch funktioniert.</pre>
+  </div>
+
+  <h2>Preisvorschlag (intern)</h2>
+  <table>
+    <tr>
+      <th>Leistung</th>
+      <th>Einmalig</th>
+      <th>Monatlich</th>
+    </tr>
+    <tr>
+      <td>Blog-System Setup (einmalig)</td>
+      <td>349–599 €</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>Artikel schreiben & veröffentlichen</td>
+      <td>—</td>
+      <td>ab 150 €/Artikel</td>
+    </tr>
+    <tr>
+      <td>Blog Content Management (monatlich)</td>
+      <td>—</td>
+      <td>ab 299 €/Monat</td>
+    </tr>
+  </table>
+
+</div>
+
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 08 — MASTER PROMPT ANHANG                                    -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<div class="content">
+  <p class="section-label">08</p>
+  <h1 class="section-title">Anhang:<br>Master<br>Prompt</h1>
+
+  <p>Den folgenden Text vollständig kopieren und in eine neue Claude Code Session einfügen. Nichts verändern.</p>
+
+  <div class="prompt-box">
+    <div class="prompt-box-header">
+      <span>MASTER PROMPT — vollständig kopieren</span>
+      <span>brand_assets/blog-system/MASTER_PROMPT.md</span>
+    </div>
+    <pre>## Kontext & Ziel
+
+Ich möchte ein vollständiges Blog-System für diese Website bauen.
+Notion dient als CMS — ich schreibe Artikel in Notion, sie erscheinen
+automatisch auf der Website.
+
+Die Website ist eine Vanilla HTML/CSS/JS Site auf Netlify
+(kein Framework, kein Build-Step).
+
+---
+
+## Schritt 1: Lies zuerst den aktuellen Stack
+
+Öffne index.html und extrahiere:
+- Alle CSS-Variablen aus :root (Farben, Fonts, Abstände)
+- Die exakte Nav-Struktur (HTML)
+- Die exakte Footer-Struktur (HTML)
+- Alle verwendeten Animationen (fadeUp, transitions etc.)
+- Den allgemeinen Seiten-Aufbau (Padding, Border-Logik,
+  Typographie-Skala)
+
+---
+
+## Schritt 2: Baue folgende 7 Dateien
+
+### A) blog/index.html — Blog-Übersichtsseite (URL: /blog)
+Design: Identisch zur Homepage.
+- fetch('/api/get-posts') → rendert Cards dynamisch
+- Jede Card: Cover-Bild (opt.) als aspect-ratio:16/9 Container,
+  Datum, Titel, Summary, "Weiterlesen →"
+- Card-Link → /blog/{slug}
+- Loading-State + Error-State im Site-Stil
+- Mobile-first, responsive
+
+### B) blog/post.html — Einzelner Artikel (URL: /blog/{slug})
+Design: Identisch zur Homepage.
+- Slug aus window.location.pathname lesen
+- fetch('/api/get-post?slug=' + slug)
+- Cover-Bild: volle Inhaltsbreite, aspect-ratio: 16/9, object-fit: cover
+- Unterstützte Notion Blocks: paragraph, heading_1/2/3,
+  bulleted_list_item, numbered_list_item, image, quote,
+  divider, callout, code
+- Zurück-Button zu /blog
+
+### C) Homepage-Sektion in index.html
+- Vor dem Footer einfügen
+- 3 neueste Artikel: fetch('/api/get-posts?limit=3')
+- "Alle Artikel →" Link zu /blog
+- Cards: eigene CSS-Klasse .blog-preview-card, die .work-card
+  überschreibt (aspect-ratio: unset !important, padding: 0 !important)
+- Cover-Bild oben in der Card als aspect-ratio:16/9 Container,
+  Text-Inhalt darunter mit eigenem Padding-Block
+- Wenn kein Cover vorhanden: Card zeigt nur Text, kein Leerraum
+
+### D) netlify/functions/get-posts.js
+- GET /api/get-posts?limit=N
+- Filter: Published = true
+- Sort: Date descending
+- Gibt zurück: [{id, title, slug, date, summary, cover}]
+- Env: NOTION_API_KEY, NOTION_DATABASE_ID
+
+### E) netlify/functions/get-post.js
+- GET /api/get-post?slug=…
+- Filter: Slug = slug UND Published = true
+- Holt Blocks und wandelt sie in HTML um
+- Gibt zurück: {id, title, slug, date, summary, cover, content}
+
+### F) _redirects (erstellen/aktualisieren — OBEN einfügen)
+/api/*  /.netlify/functions/:splat  200
+/blog/:slug  /blog/post.html  200
+
+### G) netlify.toml (erstellen/aktualisieren)
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+---
+
+## Notion Datenbank Schema
+| Property  | Typ       | Hinweis                                    |
+|-----------|-----------|---------------------------------------------|
+| Title     | title     |                                             |
+| Slug      | rich_text |                                             |
+| Published | checkbox  |                                             |
+| Date      | date      |                                             |
+| Summary   | rich_text |                                             |
+| Cover     | url       | 1600×900px (16:9) — ein Bild für alle Stellen |
+
+---
+
+## Design-Regeln
+- :root Variablen aus index.html unverändert übernehmen
+- Kein externes CSS-Framework
+- Nav und Footer pixel-identisch zu index.html
+- Mobile-first, vollständig responsive
+
+## Bilder — Ein Cover, drei Stellen
+- Alle drei Image-Positionen (Artikel-Seite, /blog-Listenansicht,
+  Homepage-Teaser) nutzen dasselbe cover-Feld aus Notion
+- Alle drei Container: aspect-ratio: 16/9, object-fit: cover
+- Empfohlene Upload-Größe: 1600 × 900 px
+- Kein Bild gesetzt → kein leerer Container, Card zeigt nur Text
+
+## Technische Anforderungen
+- Keine npm-Dependencies in Netlify Functions (nur native fetch)
+- Notion API Version: 2022-06-28
+- Kein API-Key im Frontend-Code
+
+---
+
+## Abschließende Checkliste
+- [ ] blog/index.html erstellt
+- [ ] blog/post.html erstellt
+- [ ] netlify/functions/get-posts.js erstellt
+- [ ] netlify/functions/get-post.js erstellt
+- [ ] _redirects erstellt/aktualisiert
+- [ ] netlify.toml erstellt/aktualisiert
+- [ ] Homepage-Sektion in index.html eingefügt</pre>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- BACK COVER                                                   -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<div class="page-break"></div>
+
+<div class="cover" style="min-height:50vh; justify-content: center; gap: 24px;">
+  <div>
+    <div class="cover-label">Zusammenfassung</div>
+    <h2 style="font-size: 1.8rem; font-weight:900; margin-top:16px; line-height:1.2;">3 Schritte zum Blog</h2>
+  </div>
+  <div style="display:grid; gap:16px; max-width:500px;">
+    <div style="border:1px solid rgba(255,255,255,0.2); padding:20px 24px; display:grid; grid-template-columns:40px 1fr; gap:12px;">
+      <span style="font-size:1.5rem; font-weight:900; opacity:0.4;">1</span>
+      <div>
+        <strong style="display:block; margin-bottom:4px;">Notion Setup</strong>
+        <span style="font-size:0.85rem; opacity:0.6;">Integration + Datenbank erstellen, ID + Key notieren</span>
+      </div>
+    </div>
+    <div style="border:1px solid rgba(255,255,255,0.2); padding:20px 24px; display:grid; grid-template-columns:40px 1fr; gap:12px;">
+      <span style="font-size:1.5rem; font-weight:900; opacity:0.4;">2</span>
+      <div>
+        <strong style="display:block; margin-bottom:4px;">Netlify Variables</strong>
+        <span style="font-size:0.85rem; opacity:0.6;">NOTION_API_KEY + NOTION_DATABASE_ID eintragen</span>
+      </div>
+    </div>
+    <div style="border:1px solid rgba(255,255,255,0.2); padding:20px 24px; display:grid; grid-template-columns:40px 1fr; gap:12px;">
+      <span style="font-size:1.5rem; font-weight:900; opacity:0.4;">3</span>
+      <div>
+        <strong style="display:block; margin-bottom:4px;">Master Prompt ausführen</strong>
+        <span style="font-size:0.85rem; opacity:0.6;">Prompt in Claude Code einfügen → pushen → fertig</span>
+      </div>
+    </div>
+  </div>
+  <div style="font-size:0.75rem; opacity:0.3; margin-top:32px;">YSA — Blog System Guide v1.0</div>
+</div>
+
+</body>
+</html>
