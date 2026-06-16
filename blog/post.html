@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — YSA</title>
+  <link rel="canonical" href="https://ysacooperation.de/blog/">
+  <meta name="robots" content="index,follow">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #000;
+      --white: #fff;
+      --font: 'Helvetica World', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --px: clamp(24px, 6vw, 88px);
+      --py: clamp(88px, 11vw, 148px);
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
+
+    body {
+      background: var(--white);
+      color: var(--black);
+      font-family: var(--font);
+      font-weight: 400;
+      line-height: 1.5;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── SKIP LINK ─────────────────────────────────────────── */
+    .skip-link {
+      position: absolute;
+      transform: translateY(-100%);
+      left: 0; top: 0; z-index: 9999;
+      padding: 10px 20px;
+      background: var(--black);
+      color: var(--white);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      transition: transform 0.15s ease;
+    }
+    .skip-link:focus { transform: translateY(0); }
+
+    /* ── HEADER ─────────────────────────────────────────────── */
+    .site-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px var(--px);
+      border-bottom: 1px solid var(--black);
+    }
+
+    .header-logo { height: 32px; width: auto; display: block; }
+
+    .header-nav {
+      display: flex;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .header-nav a {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--black);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .header-nav a:hover { opacity: 0.4; }
+
+    /* ── POST WRAPPER ───────────────────────────────────────── */
+    .post-wrap {
+      padding: var(--py) var(--px);
+      border-top: 1px solid var(--black);
+    }
+
+    .post-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--black);
+      text-decoration: none;
+      margin-bottom: 64px;
+      transition: opacity 0.2s;
+    }
+
+    .post-back:hover { opacity: 0.45; }
+
+    /* ── POST HEADER ────────────────────────────────────────── */
+    .post-header { max-width: 900px; margin-bottom: 72px; }
+
+    .post-date {
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 500;
+      margin-bottom: 28px;
+      display: block;
+    }
+
+    .post-title {
+      font-size: clamp(2.2rem, 5.5vw, 6rem);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      text-transform: lowercase;
+      margin-bottom: 32px;
+    }
+
+    .post-summary {
+      font-size: clamp(1rem, 1.6vw, 1.2rem);
+      font-weight: 300;
+      line-height: 1.65;
+      max-width: 680px;
+      color: #333;
+    }
+
+    /* ── COVER ──────────────────────────────────────────────── */
+    .post-cover {
+      width: 100%;
+      max-height: 540px;
+      object-fit: cover;
+      display: block;
+      margin-bottom: 80px;
+      border: 1px solid var(--black);
+    }
+
+    /* ── POST BODY ──────────────────────────────────────────── */
+    .post-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--black);
+      margin-bottom: 72px;
+    }
+
+    .post-body {
+      max-width: 740px;
+    }
+
+    .post-body p {
+      font-size: 1rem;
+      line-height: 1.9;
+      font-weight: 300;
+      margin-bottom: 1.6em;
+    }
+
+    .post-body .post-h1 {
+      font-size: clamp(1.5rem, 3vw, 2.4rem);
+      font-weight: 900;
+      letter-spacing: -0.025em;
+      line-height: 1;
+      text-transform: lowercase;
+      margin: 2.5em 0 0.7em;
+    }
+
+    .post-body .post-h2 {
+      font-size: clamp(1.2rem, 2.4vw, 1.8rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin: 2em 0 0.6em;
+    }
+
+    .post-body .post-h3 {
+      font-size: clamp(1rem, 1.8vw, 1.3rem);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin: 1.6em 0 0.5em;
+    }
+
+    .post-body ul,
+    .post-body ol {
+      padding-left: 24px;
+      margin-bottom: 1.6em;
+    }
+
+    .post-body li {
+      font-size: 0.95rem;
+      line-height: 1.85;
+      font-weight: 300;
+      margin-bottom: 0.4em;
+    }
+
+    .post-body blockquote {
+      border-left: 3px solid var(--black);
+      padding: 4px 0 4px 28px;
+      margin: 2em 0;
+      font-size: 1.05rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: #222;
+    }
+
+    .post-body hr {
+      border: none;
+      border-top: 1px solid var(--black);
+      margin: 3em 0;
+    }
+
+    .post-body pre {
+      background: var(--black);
+      color: var(--white);
+      padding: 28px 32px;
+      overflow-x: auto;
+      margin-bottom: 1.6em;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.84rem;
+      line-height: 1.65;
+    }
+
+    .post-body code {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.875em;
+      background: #f0f0f0;
+      padding: 2px 6px;
+    }
+
+    .post-body pre code {
+      background: transparent;
+      padding: 0;
+      color: inherit;
+      font-size: inherit;
+    }
+
+    .post-body figure {
+      margin: 2.5em 0;
+    }
+
+    .post-body figure img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border: 1px solid var(--black);
+    }
+
+    .post-body figcaption {
+      font-size: 0.78rem;
+      font-weight: 300;
+      color: #555;
+      letter-spacing: 0.04em;
+      margin-top: 12px;
+    }
+
+    .post-body .callout {
+      border: 1px solid var(--black);
+      padding: 24px 28px;
+      margin: 2em 0;
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      font-size: 0.9rem;
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    .post-body .callout-icon {
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      line-height: 1.4;
+    }
+
+    .post-body a {
+      color: var(--black);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .post-body a:hover { opacity: 0.55; }
+
+    /* ── LOADING / ERROR ────────────────────────────────────── */
+    .post-skeleton { max-width: 740px; }
+
+    .skel-line {
+      background: #e8e8e8;
+      border-radius: 2px;
+      margin-bottom: 14px;
+      animation: skel-pulse 1.6s ease-in-out infinite;
+    }
+
+    @keyframes skel-pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    .skel-title { height: 60px; width: 80%; margin-bottom: 24px; }
+    .skel-subtitle { height: 32px; width: 50%; margin-bottom: 48px; }
+    .skel-p1 { height: 16px; width: 100%; }
+    .skel-p2 { height: 16px; width: 95%; }
+    .skel-p3 { height: 16px; width: 88%; }
+    .skel-p4 { height: 16px; width: 100%; }
+    .skel-p5 { height: 16px; width: 70%; }
+
+    .post-not-found {
+      border: 1px solid var(--black);
+      padding: 64px;
+      max-width: 600px;
+    }
+
+    .post-not-found p {
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 1.75;
+      margin-bottom: 32px;
+    }
+
+    .btn-back {
+      display: inline-block;
+      padding: 16px 36px;
+      border: 2px solid var(--black);
+      color: var(--black);
+      text-decoration: none;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 700;
+      transition: background 0.22s, color 0.22s;
+    }
+
+    .btn-back:hover { background: var(--black); color: var(--white); }
+
+    /* ── FOOTER ─────────────────────────────────────────────── */
+    footer { border-top: 1px solid var(--black); padding: 64px var(--px) 48px; }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 80px;
+      flex-wrap: wrap;
+      gap: 48px;
+    }
+
+    .footer-logo-wrap { display: flex; flex-direction: column; gap: 20px; align-items: flex-start; }
+    .footer-logo { height: 40px; width: auto; display: block; }
+    .footer-address { display: flex; flex-direction: column; gap: 4px; }
+
+    .footer-address p,
+    .footer-address a {
+      font-size: 0.72rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      color: #555;
+      text-decoration: none;
+      line-height: 1.7;
+    }
+
+    .footer-address a:hover { color: var(--black); }
+
+    .footer-links { display: flex; flex-wrap: wrap; gap: 36px; }
+
+    .footer-links a {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--black);
+      text-decoration: none;
+      font-weight: 500;
+      transition: opacity 0.2s;
+    }
+
+    .footer-links a:hover { opacity: 0.4; }
+
+    .footer-rule { width: 100%; height: 1px; background: var(--black); margin-bottom: 36px; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 0.72rem; font-weight: 300; letter-spacing: 0.06em; color: #555; }
+
+    /* ── FOCUS ──────────────────────────────────────────────── */
+    :focus-visible { outline: 2px solid var(--black); outline-offset: 3px; }
+
+    /* ── RESPONSIVE ─────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .header-nav { gap: 20px; }
+      .post-back { margin-bottom: 40px; }
+      .post-header { margin-bottom: 48px; }
+      .post-cover { margin-bottom: 48px; max-height: 260px; }
+      .post-divider { margin-bottom: 48px; }
+      .footer-top { flex-direction: column; gap: 32px; }
+      .footer-links { gap: 20px; }
+    }
+
+    @media (max-width: 400px) {
+      .header-nav a:not(:last-child):not(:first-child) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Zum Hauptinhalt springen</a>
+
+  <header class="site-header">
+    <a href="/">
+      <img src="/brand_assets/YSA_Logo.png" alt="YSA" class="header-logo" width="500" height="500">
+    </a>
+    <nav class="header-nav" aria-label="Hauptnavigation">
+      <a href="/#why">Warum wir</a>
+      <a href="/#pricing">Preise</a>
+      <a href="/blog">Blog</a>
+      <a href="tel:01742143654">Kontakt</a>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <div class="post-wrap">
+      <a href="/blog" class="post-back">← Zurück zum Blog</a>
+      <div id="post-content">
+        <div class="post-skeleton" aria-label="Artikel wird geladen" aria-live="polite">
+          <div class="skel-line skel-title"></div>
+          <div class="skel-line skel-subtitle"></div>
+          <div class="skel-line skel-p1"></div>
+          <div class="skel-line skel-p2"></div>
+          <div class="skel-line skel-p3"></div>
+          <div class="skel-line" style="height:14px; width:100%; margin-top:24px;"></div>
+          <div class="skel-line skel-p4"></div>
+          <div class="skel-line skel-p5"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-top">
+      <div class="footer-logo-wrap">
+        <img src="/brand_assets/YSA_Logo.png" alt="YSA" class="footer-logo" width="500" height="500" loading="lazy">
+        <div class="footer-address">
+          <p>Laurinweg 5, 85521 Ottobrunn</p>
+          <a href="tel:01742143654">0174 2143654</a>
+          <a href="mailto:kontakt@ysacooperation.de">kontakt@ysacooperation.de</a>
+        </div>
+      </div>
+      <nav class="footer-links" aria-label="Footer-Navigation">
+        <a href="/#why">Warum wir</a>
+        <a href="/#process">Prozess</a>
+        <a href="/#work">Referenzen</a>
+        <a href="/#pricing">Preise</a>
+        <a href="/#faq">FAQ</a>
+        <a href="tel:01742143654">Kontakt</a>
+        <a href="/impressum.html">Impressum</a>
+        <a href="/agb.html">AGB</a>
+        <a href="/barrierefreiheit.html">Barrierefreiheit</a>
+      </nav>
+    </div>
+    <div class="footer-rule"></div>
+    <div class="footer-bottom">
+      <p>© 2025 YSA. Alle Rechte vorbehalten.</p>
+      <p>Deine Online-Präsenz, auf das nächste Level.</p>
+    </div>
+  </footer>
+
+  <script>
+    function formatDate(dateStr) {
+      if (!dateStr) return '';
+      const d = new Date(dateStr + 'T00:00:00');
+      return d.toLocaleDateString('de-DE', { day: '2-digit', month: 'long', year: 'numeric' });
+    }
+
+    function getSlug() {
+      const parts = window.location.pathname.split('/').filter(Boolean);
+      const last = parts[parts.length - 1];
+      return (last && last !== 'post.html') ? last : null;
+    }
+
+    async function loadPost() {
+      const container = document.getElementById('post-content');
+      const slug = getSlug();
+
+      if (!slug) {
+        window.location.href = '/blog';
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/get-post?slug=' + encodeURIComponent(slug));
+
+        if (res.status === 404) {
+          container.innerHTML = `
+            <div class="post-not-found">
+              <p>Dieser Artikel wurde nicht gefunden oder ist nicht mehr verfügbar.</p>
+              <a href="/blog" class="btn-back">← Zurück zum Blog</a>
+            </div>`;
+          return;
+        }
+
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+        const post = await res.json();
+
+        // Update page meta
+        document.title = post.title + ' — YSA';
+        const canon = document.querySelector('link[rel="canonical"]');
+        if (canon) canon.href = 'https://ysacooperation.de/blog/' + post.slug;
+
+        // Update og tags if they exist, otherwise inject
+        updateMeta('og:title', post.title + ' — YSA');
+        updateMeta('og:description', post.summary || '');
+        if (post.cover) updateMeta('og:image', post.cover);
+
+        const coverHtml = post.cover
+          ? `<img src="${post.cover}" alt="${post.title}" class="post-cover" loading="eager">`
+          : '';
+
+        container.innerHTML = `
+          <div class="post-header">
+            ${post.date ? `<span class="post-date">${formatDate(post.date)}</span>` : ''}
+            <h1 class="post-title">${post.title}</h1>
+            ${post.summary ? `<p class="post-summary">${post.summary}</p>` : ''}
+          </div>
+          ${coverHtml}
+          ${post.content ? '<div class="post-divider"></div>' : ''}
+          <article class="post-body">${post.content || ''}</article>
+        `;
+      } catch (err) {
+        container.innerHTML = `
+          <div class="post-not-found">
+            <p>Der Artikel konnte nicht geladen werden. Bitte versuche es später erneut.</p>
+            <a href="/blog" class="btn-back">← Zurück zum Blog</a>
+          </div>`;
+      }
+    }
+
+    function updateMeta(property, content) {
+      let el = document.querySelector(`meta[property="${property}"]`);
+      if (!el) {
+        el = document.createElement('meta');
+        el.setAttribute('property', property);
+        document.head.appendChild(el);
+      }
+      el.setAttribute('content', content);
+    }
+
+    loadPost();
+  </script>
+
+</body>
+</html>

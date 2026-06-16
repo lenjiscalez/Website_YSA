@@ -993,6 +993,16 @@
     </div>
   </section>
 
+  <!-- BLOG PREVIEW -->
+  <section id="blog" style="display:none">
+    <div class="section-meta reveal"><span>06 — Blog</span></div>
+    <h2 class="section-headline reveal">aktuelle<br>artikel.</h2>
+    <div id="blog-preview-grid" class="work-grid reveal"></div>
+    <div style="margin-top:48px; padding-top:32px; border-top:1px solid var(--black);">
+      <a href="/blog" style="font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;font-weight:700;text-decoration:none;color:var(--black);transition:opacity 0.2s" onmouseenter="this.style.opacity='.4'" onmouseleave="this.style.opacity='1'">Alle Artikel →</a>
+    </div>
+  </section>
+
   </main>
 
   <!-- FOOTER -->
@@ -1101,6 +1111,35 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // ── Blog preview ────────────────────────────────────────────
+    (function () {
+      function fmtDate(s) {
+        if (!s) return '';
+        const d = new Date(s + 'T00:00:00');
+        return d.toLocaleDateString('de-DE', { day: '2-digit', month: 'long', year: 'numeric' });
+      }
+      fetch('/api/get-posts?limit=3')
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(posts => {
+          if (!Array.isArray(posts) || !posts.length) return;
+          const grid = document.getElementById('blog-preview-grid');
+          grid.innerHTML = posts.map(p => `
+            <a href="/blog/${p.slug}" class="work-card" style="text-decoration:none;color:var(--black);cursor:pointer">
+              <span class="work-tag">${fmtDate(p.date)}</span>
+              <h3>${p.title}</h3>
+              <div class="work-foot">
+                <span>${p.summary ? p.summary.substring(0, 72) + (p.summary.length > 72 ? '…' : '') : ''}</span>
+                <span class="work-arrow">→</span>
+              </div>
+            </a>
+          `).join('');
+          document.getElementById('blog').style.display = '';
+          // Let the reveal observer pick up the new section
+          document.querySelectorAll('#blog .reveal').forEach(el => io.observe(el));
+        })
+        .catch(() => {});
+    })();
 
     // ── FAQ accordion ───────────────────────────────────────────
     document.querySelectorAll('.faq-q').forEach(trigger => {
