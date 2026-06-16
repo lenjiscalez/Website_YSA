@@ -376,7 +376,7 @@
     /* ── HERO CAROUSEL ────────────────────────────────────── */
 
     .hero-carousel {
-      margin-top: clamp(36px, 5vw, 56px);
+      margin-top: clamp(32px, 4.5vw, 52px);
       opacity: 0;
       animation: fadeUp 0.7s ease forwards 1.1s;
     }
@@ -385,12 +385,12 @@
 
     .embla__container {
       display: flex;
-      gap: 20px;
+      gap: 16px;
       will-change: transform;
     }
 
     .embla__slide {
-      flex: 0 0 clamp(220px, 44vw, 380px);
+      flex: 0 0 30%;
       min-width: 0;
     }
 
@@ -400,25 +400,59 @@
       color: var(--black);
       -webkit-user-drag: none;
       user-select: none;
+      cursor: pointer;
     }
+
+    .case-img-box {
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: #f0f0f0;
+      position: relative;
+      transition: border-color 0.22s, box-shadow 0.22s;
+    }
+
+    .case-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+      transition: transform 0.4s ease;
+    }
+
+    .case-placeholder {
+      position: absolute;
+      inset: 0;
+      background: #f0f0f0;
+    }
+
+    .case-card:hover .case-img-box {
+      border-color: var(--black);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .case-card:hover .case-img-box img { transform: scale(1.02); }
 
     .case-info {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 14px;
+      margin-top: 12px;
       padding: 0 2px;
     }
 
     .case-title {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       font-weight: 600;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
     }
 
     .case-arrow {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
+      flex-shrink: 0;
       transition: transform 0.2s;
     }
 
@@ -431,8 +465,8 @@
     }
 
     .embla-btn {
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
       border: 1px solid var(--black);
       background: transparent;
       color: var(--black);
@@ -447,120 +481,6 @@
     }
 
     .embla-btn:hover { background: var(--black); color: var(--white); }
-
-    /* ── DEVICE FRAMES ────────────────────────────────────── */
-
-    .device-laptop {
-      width: 100%;
-      position: relative;
-      user-select: none;
-    }
-
-    .device-screen-wrap {
-      background: #111;
-      border: 1.5px solid #2a2a2a;
-      border-radius: 7px 7px 0 0;
-      padding: 5% 3% 3%;
-      position: relative;
-    }
-
-    .device-screen-wrap::before {
-      content: '';
-      position: absolute;
-      top: 7px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 5px;
-      height: 5px;
-      background: #2e2e2e;
-      border-radius: 50%;
-    }
-
-    .device-screen-wrap img {
-      width: 100%;
-      aspect-ratio: 16 / 10;
-      object-fit: cover;
-      display: block;
-      border-radius: 1px;
-      pointer-events: none;
-    }
-
-    .device-base {
-      height: 12px;
-      background: #1a1a1a;
-      border: 1.5px solid #2a2a2a;
-      border-top: none;
-      border-radius: 0 0 3px 3px;
-      position: relative;
-    }
-
-    .device-base::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 36%;
-      height: 100%;
-      background: #111;
-      border-radius: 0 0 5px 5px;
-    }
-
-    .device-phone {
-      width: 130px;
-      margin: 0 auto;
-      position: relative;
-      user-select: none;
-    }
-
-    .device-phone-body {
-      background: #111;
-      border: 1.5px solid #2a2a2a;
-      border-radius: 20px;
-      padding: 14px 7px 18px;
-      position: relative;
-    }
-
-    .device-phone-body::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 38px;
-      height: 8px;
-      background: #111;
-      border-radius: 0 0 8px 8px;
-      border: 1.5px solid #2a2a2a;
-      border-top: none;
-      z-index: 1;
-    }
-
-    .device-phone-screen {
-      border-radius: 13px;
-      overflow: hidden;
-      background: #000;
-    }
-
-    .device-phone-screen img {
-      width: 100%;
-      aspect-ratio: 9 / 19.5;
-      object-fit: cover;
-      display: block;
-      pointer-events: none;
-    }
-
-    .device-phone-body::after {
-      content: '';
-      position: absolute;
-      bottom: 8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 28px;
-      height: 3px;
-      background: #2e2e2e;
-      border-radius: 2px;
-    }
 
     /* ── SHARED SECTIONS ──────────────────────────────────── */
 
@@ -949,6 +869,8 @@
     @media (max-width: 900px) {
       .nav-links { gap: 24px; }
 
+      .embla__slide { flex: 0 0 46%; }
+
       .why-grid { grid-template-columns: repeat(2, 1fr); }
 
       .why-card:nth-child(2) { border-right: none; }
@@ -976,8 +898,7 @@
       .hero-bottom { align-items: flex-end; }
 
       /* Carousel */
-      .embla__slide { flex: 0 0 min(260px, 76vw); }
-      .device-phone { width: 110px; }
+      .embla__slide { flex: 0 0 80%; }
 
       /* Why cards */
       .why-grid { grid-template-columns: 1fr; }
@@ -1555,38 +1476,30 @@
       if (!window.EmblaCarousel) return;
 
       const studies = await getCaseStudies();
-      if (!studies.length) return;
+      const carouselEl = document.querySelector('.hero-carousel');
+
+      if (!studies.length) {
+        if (carouselEl) carouselEl.hidden = true;
+        return;
+      }
 
       const container = document.getElementById('hero-embla-container');
       if (!container) return;
 
-      container.innerHTML = studies.map(s => {
-        const frame = s.device === 'mobile'
-          ? `<div class="device-phone">
-               <div class="device-phone-body">
-                 <div class="device-phone-screen">
-                   <img src="${s.image}" alt="${s.alt}" loading="lazy" draggable="false" width="390" height="844">
-                 </div>
-               </div>
-             </div>`
-          : `<div class="device-laptop">
-               <div class="device-screen-wrap">
-                 <img src="${s.image}" alt="${s.alt}" loading="lazy" draggable="false" width="1280" height="800">
-               </div>
-               <div class="device-base"></div>
-             </div>`;
-
-        return `
-          <div class="embla__slide">
-            <a href="${s.url}" class="case-card" target="_blank" rel="noopener noreferrer" draggable="false">
-              ${frame}
-              <div class="case-info">
-                <span class="case-title">${s.title}</span>
-                <span class="case-arrow">↗</span>
-              </div>
-            </a>
-          </div>`;
-      }).join('');
+      container.innerHTML = studies.map(s => `
+        <div class="embla__slide">
+          <a href="${s.url}" class="case-card" target="_blank" rel="noopener noreferrer" draggable="false">
+            <div class="case-img-box">
+              ${s.image
+                ? `<img src="${s.image}" alt="${s.alt || s.title}" loading="lazy" draggable="false" width="1600" height="1000">`
+                : '<div class="case-placeholder"></div>'}
+            </div>
+            <div class="case-info">
+              <span class="case-title">${s.title}</span>
+              <span class="case-arrow" aria-hidden="true">↗</span>
+            </div>
+          </a>
+        </div>`).join('');
 
       const emblaNode = document.getElementById('hero-embla');
       const embla = window.EmblaCarousel(emblaNode, {

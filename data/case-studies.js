@@ -1,47 +1,23 @@
-// TODO: Replace Promise.resolve with a Notion API fetch when case studies are in the database.
-// Each entry: { id, title, url, image, device: 'desktop'|'mobile', alt }
+// Fetches case studies from the Netlify Function, which reads from Notion.
+// Falls back to placeholder data when running locally without the function.
 
-export function getCaseStudies() {
-  return Promise.resolve([
-    {
-      id: '1',
-      title: 'Friseursalon München',
-      url: 'https://example.com',
-      image: 'https://placehold.co/1280x800/f5f5f5/111111?text=Friseursalon+München',
-      device: 'desktop',
-      alt: 'Screenshot der Website eines Friseursalons in München',
-    },
-    {
-      id: '2',
-      title: 'Zahnarztpraxis Ottobrunn',
-      url: 'https://example.com',
-      image: 'https://placehold.co/390x844/f5f5f5/111111?text=Zahnarzt',
-      device: 'mobile',
-      alt: 'Mobile Website einer Zahnarztpraxis in Ottobrunn',
-    },
-    {
-      id: '3',
-      title: 'Restaurant Bogenhausen',
-      url: 'https://example.com',
-      image: 'https://placehold.co/1280x800/f5f5f5/111111?text=Restaurant+Bogenhausen',
-      device: 'desktop',
-      alt: 'Screenshot der Website eines Restaurants in Bogenhausen',
-    },
-    {
-      id: '4',
-      title: 'Physiotherapie Studio',
-      url: 'https://example.com',
-      image: 'https://placehold.co/390x844/f5f5f5/111111?text=Physiotherapie',
-      device: 'mobile',
-      alt: 'Mobile Website eines Physiotherapie Studios',
-    },
-    {
-      id: '5',
-      title: 'Rechtsanwalt Schwabing',
-      url: 'https://example.com',
-      image: 'https://placehold.co/1280x800/f5f5f5/111111?text=Rechtsanwalt+Schwabing',
-      device: 'desktop',
-      alt: 'Screenshot der Website einer Rechtsanwaltskanzlei in Schwabing',
-    },
-  ]);
+const FALLBACK = [
+  { id: 'p1', title: 'Friseursalon München',       url: '#', image: null, device: 'desktop', alt: '' },
+  { id: 'p2', title: 'Zahnarztpraxis Ottobrunn',   url: '#', image: null, device: 'desktop', alt: '' },
+  { id: 'p3', title: 'Restaurant Bogenhausen',      url: '#', image: null, device: 'desktop', alt: '' },
+  { id: 'p4', title: 'Physiotherapie Studio',       url: '#', image: null, device: 'desktop', alt: '' },
+  { id: 'p5', title: 'Rechtsanwalt Schwabing',      url: '#', image: null, device: 'desktop', alt: '' },
+];
+
+export async function getCaseStudies() {
+  try {
+    const res = await fetch('/api/get-case-studies');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if (!Array.isArray(data) || !data.length) throw new Error('empty response');
+    return data;
+  } catch (err) {
+    console.warn('[getCaseStudies] API unavailable, using fallback placeholders:', err.message);
+    return FALLBACK;
+  }
 }
