@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #000;
+      --white: #fff;
+      --font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    html, body {
+      width: 2560px;
+      height: 1664px;
+      overflow: hidden;
+      background: var(--white);
+      color: var(--black);
+      font-family: var(--font);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #hero {
+      width: 2560px;
+      height: 1664px;
+      padding: 120px 176px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--white);
+    }
+
+    /* ── TOP ───────────────────── */
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .hero-date {
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.3;
+    }
+
+    /* ── MAIN ──────────────────── */
+    .hero-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 0;
+    }
+
+    .hero-rule {
+      width: 280px;
+      height: 6px;
+      background: var(--black);
+      margin-bottom: 56px;
+    }
+
+    .hero-headline {
+      font-size: 288px;
+      font-weight: 900;
+      line-height: 0.88;
+      letter-spacing: -0.03em;
+      text-transform: lowercase;
+    }
+
+    /* ── BOTTOM ────────────────── */
+    .hero-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .hero-scroll {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      opacity: 0.35;
+    }
+
+    .hero-scroll-label {
+      font-size: 22px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .hero-scroll-line {
+      width: 2px;
+      height: 100px;
+      background: var(--black);
+    }
+
+    .hero-goals {
+      text-align: right;
+    }
+
+    .hero-goals-list {
+      list-style: none;
+      margin-bottom: 28px;
+    }
+
+    .hero-goals-list li {
+      font-size: 30px;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      line-height: 2;
+      opacity: 0.7;
+    }
+
+    .hero-goals-list li .num {
+      font-weight: 700;
+      opacity: 0.35;
+      margin-right: 12px;
+      font-size: 22px;
+      letter-spacing: 0.1em;
+    }
+
+    .hero-tagline-rule {
+      width: 100%;
+      height: 6px;
+      background: var(--black);
+    }
+  </style>
+</head>
+<body>
+  <section id="hero">
+
+    <div class="hero-top">
+      <span class="hero-date">2025</span>
+    </div>
+
+    <div class="hero-main">
+      <div class="hero-rule"></div>
+      <h1 class="hero-headline">make it<br>happen.</h1>
+    </div>
+
+    <div class="hero-bottom">
+      <div class="hero-scroll">
+        <span class="hero-scroll-label">goals</span>
+        <div class="hero-scroll-line"></div>
+      </div>
+      <div class="hero-goals">
+        <ul class="hero-goals-list">
+          <li><span class="num">01 —</span> Move out</li>
+          <li><span class="num">02 —</span> Pick Offer Stack &amp; Marketing Strategy. Attack.</li>
+          <li><span class="num">03 —</span> Reach 5.000€ MRR. Quit Job.</li>
+          <li><span class="num">04 —</span> Reach 10.000€ MRR. Retire Kassandra.</li>
+        </ul>
+        <div class="hero-tagline-rule"></div>
+      </div>
+    </div>
+
+  </section>
+</body>
+</html>
