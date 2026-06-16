@@ -786,6 +786,44 @@
     /* ── FOCUS VISIBLE ────────────────────────────────────── */
     :focus-visible { outline: 2px solid var(--black); outline-offset: 3px; }
     .ptab:focus-visible { outline-offset: -3px; }
+
+    /* ── BLOG PREVIEW CARDS ────────────────────────────────── */
+    .blog-preview-card {
+      aspect-ratio: unset !important;
+      padding: 0 !important;
+      cursor: pointer !important;
+      text-decoration: none;
+      color: var(--black);
+    }
+
+    .blog-preview-img {
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-bottom: 1px solid var(--black);
+    }
+
+    .blog-preview-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .blog-preview-card:hover .blog-preview-img img { transform: scale(1.04); }
+
+    .blog-preview-body {
+      padding: 32px 40px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex: 1;
+      gap: 16px;
+    }
+
+    @media (max-width: 640px) {
+      .blog-preview-body { padding: 28px 28px 32px; }
+    }
   </style>
 </head>
 <body>
@@ -1126,12 +1164,17 @@
           if (!Array.isArray(posts) || !posts.length) return;
           const grid = document.getElementById('blog-preview-grid');
           grid.innerHTML = posts.map(p => `
-            <a href="/blog/${p.slug}" class="work-card" style="text-decoration:none;color:var(--black);cursor:pointer">
-              <span class="work-tag">${fmtDate(p.date)}</span>
-              <h3>${p.title}</h3>
-              <div class="work-foot">
-                <span>${p.summary ? p.summary.substring(0, 72) + (p.summary.length > 72 ? '…' : '') : ''}</span>
-                <span class="work-arrow">→</span>
+            <a href="/blog/${p.slug}" class="work-card blog-preview-card">
+              ${p.teaserHomepage ? `<div class="blog-preview-img"><img src="${p.teaserHomepage}" alt="${p.title}" loading="lazy"></div>` : ''}
+              <div class="blog-preview-body">
+                <div>
+                  <span class="work-tag">${fmtDate(p.date)}</span>
+                  <h3 style="margin-top:12px">${p.title}</h3>
+                </div>
+                <div class="work-foot">
+                  <span>${p.summary ? p.summary.substring(0, 72) + (p.summary.length > 72 ? '…' : '') : ''}</span>
+                  <span class="work-arrow">→</span>
+                </div>
               </div>
             </a>
           `).join('');
