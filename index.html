@@ -1165,7 +1165,7 @@
           const grid = document.getElementById('blog-preview-grid');
           grid.innerHTML = posts.map(p => `
             <a href="/blog/${p.slug}" class="work-card blog-preview-card">
-              ${p.teaserHomepage ? `<div class="blog-preview-img"><img src="${p.teaserHomepage}" alt="${p.title}" loading="lazy"></div>` : ''}
+              ${p.cover ? `<div class="blog-preview-img"><img src="${p.cover}" alt="${p.title}" loading="lazy"></div>` : ''}
               <div class="blog-preview-body">
                 <div>
                   <span class="work-tag">${fmtDate(p.date)}</span>

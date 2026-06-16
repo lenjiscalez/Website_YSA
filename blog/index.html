@@ -422,7 +422,7 @@
     function cardHtml(post) {
       return `
         <a href="/blog/${post.slug}" class="blog-card">
-          ${post.teaserBlogpage ? `<div class="blog-card-cover"><img src="${post.teaserBlogpage}" alt="${post.title}" loading="lazy"></div>` : ''}
+          ${post.cover ? `<div class="blog-card-cover"><img src="${post.cover}" alt="${post.title}" loading="lazy"></div>` : ''}
           <div class="blog-card-body">
             <span class="blog-card-date">${formatDate(post.date)}</span>
             <h2 class="blog-card-title">${post.title}</h2>

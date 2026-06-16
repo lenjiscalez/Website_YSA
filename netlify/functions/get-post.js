@@ -183,8 +183,6 @@ exports.handler = async (event) => {
         page.cover?.external?.url ||
         page.cover?.file?.url ||
         null,
-      teaserHomepage: page.properties['Teaser Homepage']?.url || null,
-      teaserBlogpage: page.properties['Teaser Blogpage']?.url || null,
       content,
     };
 
